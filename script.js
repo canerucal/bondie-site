@@ -3,8 +3,6 @@ const APP_STORE_URL = "";
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector("#nav-links");
 const sectionLinks = document.querySelectorAll(".nav-link");
-const supportAnchors = document.querySelectorAll(".support-anchor");
-const supportPanel = document.querySelector("#support-form");
 const appStoreLink = document.querySelector("#app-store-link");
 
 if (APP_STORE_URL && appStoreLink) {
@@ -42,10 +40,3 @@ const observer = new IntersectionObserver(
 );
 
 observedSections.forEach((section) => observer.observe(section));
-
-supportAnchors.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    supportPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-});

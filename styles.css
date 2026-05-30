@@ -284,13 +284,6 @@ h3 {
   text-transform: uppercase;
 }
 
-.text-link {
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 750;
-  border-bottom: 1px solid currentColor;
-}
-
 .hero-card-gallery {
   display: flex;
   justify-content: center;
@@ -416,7 +409,7 @@ h3 {
 
 .support-anchor:hover,
 .support-anchor:focus-visible {
-  color: var(--coral-deep);
+  color: var(--coral);
 }
 
 .safety-grid {
@@ -462,14 +455,6 @@ h3 {
   grid-template-columns: minmax(260px, 0.72fr) minmax(320px, 0.9fr);
   gap: clamp(40px, 8vw, 112px);
   align-items: start;
-}
-
-.mail-link {
-  display: inline-flex;
-  margin-top: 26px;
-  color: var(--ink);
-  font-weight: 800;
-  border-bottom: 1px solid currentColor;
 }
 
 .tally-panel {
@@ -715,10 +700,6 @@ h3 {
 
   .store-badge-soon span {
     font-size: 10px;
-  }
-
-  .text-link {
-    font-size: 13px;
   }
 
   .hero-card-gallery {
