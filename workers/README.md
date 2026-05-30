@@ -27,6 +27,8 @@ RECAPTCHA_MIN_SCORE=0.5
 
 ## Frontend Configuration
 
+TODO: Configure the support form after the GitHub Pages domain is live.
+
 After deploying the Worker and creating the reCAPTCHA site key, update `index.html`:
 
 ```html
