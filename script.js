@@ -3,6 +3,7 @@ const APP_STORE_URL = "";
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector("#nav-links");
 const sectionLinks = document.querySelectorAll(".nav-link");
+const supportAnchors = document.querySelectorAll(".support-anchor");
 const supportForm = document.querySelector("#support-form");
 const formStatus = document.querySelector("#form-status");
 const appStoreLink = document.querySelector("#app-store-link");
@@ -43,6 +44,16 @@ const observer = new IntersectionObserver(
 
 observedSections.forEach((section) => observer.observe(section));
 
+supportAnchors.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    supportForm?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      supportForm?.querySelector("input, select, textarea, button")?.focus({ preventScroll: true });
+    }, 450);
+  });
+});
+
 function setStatus(message, type) {
   if (!formStatus) return;
   formStatus.textContent = message;
@@ -62,7 +73,7 @@ function loadRecaptcha(siteKey) {
     script.async = true;
     script.defer = true;
     script.onload = () => window.grecaptcha.ready(resolve);
-    script.onerror = () => reject(new Error("reCAPTCHA yuklenemedi."));
+    script.onerror = () => reject(new Error("Guvenlik kontrolu tamamlanamadi."));
     document.head.appendChild(script);
   });
 }
@@ -82,10 +93,7 @@ supportForm?.addEventListener("submit", async (event) => {
   };
 
   if (!endpoint || !recaptchaSiteKey) {
-    setStatus(
-      "Form endpoint'i henuz baglanmadi. Simdilik hello.bondie.app@gmail.com adresine yazabilirsiniz.",
-      "error",
-    );
+    setStatus("Mesaj şu anda gönderilemiyor. Lütfen daha sonra tekrar deneyin.", "error");
     return;
   }
 
@@ -109,15 +117,14 @@ supportForm?.addEventListener("submit", async (event) => {
       body: JSON.stringify({ ...payload, recaptchaToken }),
     });
 
-    const result = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(result.message || "Mesaj gonderilemedi.");
+      throw new Error("Mesaj gonderilemedi.");
     }
 
     supportForm.reset();
     setStatus("Mesajiniz alindi. En kisa surede yanit verecegiz.", "success");
   } catch (error) {
-    setStatus(error.message || "Mesaj gonderilemedi. Lutfen daha sonra tekrar deneyin.", "error");
+    setStatus("Mesaj gonderilemedi. Lutfen daha sonra tekrar deneyin.", "error");
   } finally {
     submitButton.disabled = false;
   }
