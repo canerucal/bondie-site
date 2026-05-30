@@ -46,6 +46,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.i18n-pending [data-i18n],
+.i18n-pending [data-i18n-html] {
+  visibility: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -115,6 +120,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 28px;
+  margin-left: auto;
   color: var(--muted);
   font-size: 14px;
   font-weight: 650;
@@ -126,6 +132,44 @@ textarea {
 
 .nav-link:hover,
 .nav-link.is-active {
+  color: var(--ink);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.7);
+}
+
+.language-option {
+  min-width: 36px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.language-option:hover,
+.language-option:focus-visible {
+  background: rgba(242, 127, 107, 0.16);
+}
+
+.language-option.is-active {
+  background: var(--rose);
   color: var(--ink);
 }
 
@@ -240,25 +284,28 @@ h3 {
 .store-badge-link,
 .store-badge-soon {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.store-badge-link {
-  width: 189px;
+.store-badge-link,
+.store-badge-soon {
   height: 50px;
-  border-radius: 12px;
-  transition:
-    transform 160ms ease,
-    opacity 160ms ease;
 }
 
-.store-badge-link img {
-  width: 100%;
-  height: auto;
-}
-
-.store-badge-soon img {
+.store-badge-image {
   width: auto;
   height: 50px;
+  object-fit: contain;
+}
+
+#google-play-badge {
+  height: 74px;
+}
+
+html[lang="tr"] #google-play-badge,
+html[lang="es"] #google-play-badge {
+  height: 65px;
 }
 
 .store-badge-link:not(.app-store-link-disabled):hover {
@@ -271,17 +318,18 @@ h3 {
 
 .store-badge-soon {
   position: relative;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
 }
 
-.store-badge-soon span {
+.store-badge-status {
+  position: absolute;
+  left: 50%;
+  bottom: -23px;
+  transform: translateX(-50%);
   color: var(--coral);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .hero-card-gallery {
@@ -458,6 +506,7 @@ h3 {
 }
 
 .tally-panel {
+  position: relative;
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -468,8 +517,16 @@ h3 {
 .tally-panel iframe {
   display: block;
   width: 100%;
+  min-height: 720px;
   border: 0;
-  min-height: 420px;
+}
+
+.tally-panel iframe.is-preloading {
+  position: absolute;
+  inset: 28px;
+  width: calc(100% - 56px);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .site-footer {
@@ -499,7 +556,7 @@ h3 {
   }
 }
 
-@media (min-width: 921px) and (max-width: 1240px) {
+@media (min-width: 1025px) and (max-width: 1240px) {
   .hero-grid {
     grid-template-columns: minmax(0, 0.95fr) minmax(500px, 0.85fr);
     gap: clamp(36px, 4vw, 56px);
@@ -510,7 +567,7 @@ h3 {
   }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .section {
     padding: 96px 0;
   }
@@ -624,8 +681,43 @@ h3 {
   }
 
   .hero-actions {
-    align-items: flex-start;
     flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .store-badge-link,
+  .store-badge-soon {
+    width: 158px;
+    height: 42px;
+    justify-content: flex-start;
+  }
+
+  .store-badge-image {
+    height: 42px;
+  }
+
+  #google-play-badge {
+    height: 62px;
+  }
+
+  html[lang="en"] #google-play-badge {
+    margin-left: -10px;
+  }
+
+  html[lang="tr"] #google-play-badge,
+  html[lang="es"] #google-play-badge {
+    height: 55px;
+  }
+
+  .store-badge-status {
+    bottom: -20px;
+    font-size: 10px;
+  }
+
+  .hero-card-gallery {
+    margin-top: 8px;
   }
 
   .activity-strip,
@@ -649,8 +741,59 @@ h3 {
     padding: 20px;
   }
 
+  .tally-panel iframe.is-preloading {
+    inset: 20px;
+    width: calc(100% - 40px);
+  }
+
   .footer-inner {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  h1 {
+    margin-bottom: 18px;
+    font-size: clamp(48px, 17vw, 64px);
+    letter-spacing: -0.03em;
+  }
+
+  .hero-lede {
+    margin-bottom: 28px;
+    font-size: 17px;
+  }
+
+  .hero-actions {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .store-badge-link,
+  .store-badge-soon {
+    width: 144px;
+    height: 38px;
+  }
+
+  .store-badge-image {
+    height: 38px;
+  }
+
+  #google-play-badge {
+    height: 56px;
+  }
+
+  html[lang="en"] #google-play-badge {
+    margin-left: -9px;
+  }
+
+  html[lang="tr"] #google-play-badge,
+  html[lang="es"] #google-play-badge {
+    height: 50px;
+  }
+
+  .store-badge-status {
+    bottom: -18px;
+    font-size: 9px;
   }
 }
 
@@ -689,16 +832,22 @@ h3 {
     gap: 14px;
   }
 
-  .store-badge-link {
-    width: 168px;
+  .store-badge-link,
+  .store-badge-soon,
+  .store-badge-image {
     height: 44px;
   }
 
-  .store-badge-soon img {
-    height: 44px;
+  #google-play-badge {
+    height: 65px;
   }
 
-  .store-badge-soon span {
+  html[lang="tr"] #google-play-badge,
+  html[lang="es"] #google-play-badge {
+    height: 57px;
+  }
+
+  .store-badge-status {
     font-size: 10px;
   }
 
