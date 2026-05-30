@@ -185,20 +185,20 @@
             </p>
             <h3>Form güvenliği ve e-posta gönderimi</h3>
             <p>
-              Destek formu kötüye kullanımı azaltmak için reCAPTCHA kontrolü kullanabilir ve
-              mesajınız e-posta hizmet sağlayıcısı üzerinden Bondie destek adresine gönderilebilir.
-              Bu hizmetler yalnızca form gönderimini güvenli şekilde işlemek ve mesajı iletmek
-              için kullanılır; Bondie bu bilgileri reklam veya izleme amacıyla kullanmaz.
+              Destek formu Tally tarafından sağlanır. Tally form gönderimini işleyebilir,
+              kötüye kullanımı azaltmak için güvenlik kontrolleri uygulayabilir ve mesajınızı
+              Bondie destek adresine iletebilir. Bondie bu bilgileri reklam veya izleme amacıyla
+              kullanmaz.
             </p>
             <h3>Veri saklama ve silme</h3>
             <p>
               Lokal uygulama verileri, kullanıcı uygulamayı kullanmaya devam ettiği sürece cihazda
               saklanır. Uygulama silindiğinde bu veriler işletim sistemi tarafından kaldırılabilir.
               Bondie bu veriler için sunucu tarafında ayrı bir hesap veya yedek tutmaz. Destek
-              formuyla gönderilen iletişim kayıtları ayrı bir veritabanında saklanmaz; adınız,
-              e-posta adresiniz, seçtiğiniz konu ve mesajınız destek talebinizi yanıtlayabilmemiz
-              için Bondie destek e-posta kutusuna gelen mesaj olarak tutulur. Bu kayıtlar yalnızca
-              destek, gizlilik, güvenlik bildirimi veya hata geri bildirimi takibi için kullanılır.
+              formuyla gönderilen adınız, e-posta adresiniz, seçtiğiniz konu ve mesajınız Tally
+              üzerinden işlenebilir ve destek talebinizi yanıtlayabilmemiz için Bondie destek
+              e-posta kutusunda tutulabilir. Bu kayıtlar yalnızca destek, gizlilik, güvenlik
+              bildirimi veya hata geri bildirimi takibi için kullanılır.
               Gizlilik soruları, destek kayıtlarının silinmesi veya lokal verileri silme konusunda yardım için
               <a class="support-anchor" href="#support-form">destek formunu</a> kullanabilirsiniz.
             </p>
@@ -309,42 +309,24 @@
             <p class="eyebrow">Destek</p>
             <h2>Yardıma mı ihtiyacınız var?</h2>
             <p class="section-lede">
-              Uygulama, gizlilik, güvenlik, aktivite geri bildirimi veya hata bildirimi için bize yazın.
+              Uygulama, gizlilik, güvenlik, aktivite geri bildirimi veya hata bildirimi için bize
+              yazın. Doğrudan e-posta için
+              <a href="mailto:hello.bondie.app@gmail.com">hello.bondie.app@gmail.com</a>.
             </p>
           </div>
 
-          <form
-            class="support-form"
-            id="support-form"
-            data-worker-endpoint=""
-            data-recaptcha-site-key=""
-          >
-            <label>
-              Ad
-              <input name="name" autocomplete="name" required maxlength="80" />
-            </label>
-            <label>
-              E-posta
-              <input name="email" type="email" autocomplete="email" required maxlength="120" />
-            </label>
-            <label>
-              Konu
-              <select name="subject" required>
-                <option value="">Seçin</option>
-                <option>Uygulama desteği</option>
-                <option>Gizlilik sorusu</option>
-                <option>Güvenlik bildirimi</option>
-                <option>Aktivite geri bildirimi</option>
-                <option>Hata bildirimi</option>
-              </select>
-            </label>
-            <label>
-              Mesaj
-              <textarea name="message" rows="5" required maxlength="2000"></textarea>
-            </label>
-            <button class="submit-button" type="submit">Gönder</button>
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-          </form>
+          <div class="tally-panel" id="support-form">
+            <iframe
+              data-tally-src="https://tally.so/embed/44zoY5?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              loading="lazy"
+              width="100%"
+              height="420"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="Bondie destek formu"
+            ></iframe>
+          </div>
         </div>
       </section>
     </main>
@@ -355,6 +337,7 @@
       </div>
     </footer>
 
+    <script src="https://tally.so/widgets/embed.js" defer></script>
     <script src="script.js"></script>
   </body>
 </html>
