@@ -1,0 +1,55 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="116" y1="102" x2="902" y2="938" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fffaf0"/>
+      <stop offset="1" stop-color="#fff4df"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="324" y1="214" x2="756" y2="812" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff987d"/>
+      <stop offset="0.58" stop-color="#ffd077"/>
+      <stop offset="1" stop-color="#ffb36d"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="314" y1="783" x2="789" y2="536" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#92d7c7"/>
+      <stop offset="1" stop-color="#d7e7b4"/>
+    </linearGradient>
+    <filter id="softShadow" x="194" y="112" width="680" height="804" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="28" stdDeviation="32" flood-color="#7a5d35" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="-10" stdDeviation="14" flood-color="#ffffff" flood-opacity="0.45"/>
+    </filter>
+    <filter id="innerShade" x="360" y="384" width="444" height="356" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="30" dy="-22" stdDeviation="28" flood-color="#8b6d33" flood-opacity="0.25"/>
+    </filter>
+    <filter id="texture" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.04"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect x="20" y="1" width="984" height="1016" rx="205" fill="url(#bg)"/>
+  <rect x="20" y="1" width="984" height="1016" rx="205" fill="url(#texture)" opacity="0.36"/>
+
+  <g filter="url(#softShadow)">
+    <path
+      d="M274 276C274 225.19 315.19 184 366 184C416.81 184 458 225.19 458 276V348C511.45 318.66 574.12 303 646 303C745.41 303 826 383.59 826 483C826 543.35 796.3 596.71 750.75 629.35C774.85 650.74 790 681.94 790 716.5C790 780.84 737.84 833 673.5 833H394C327.73 833 274 779.27 274 713V276Z"
+      fill="url(#orange)"
+    />
+    <path
+      d="M756 561C800 582 826 623 826 668C826 759 713 850 497 850H415C337.13 850 274 786.87 274 709V701C302 744 356 773 433 773C545 773 639 744 713 690C759 656 779 616 756 561Z"
+      fill="url(#mint)"
+    />
+    <path
+      d="M419.5 485.5C464.95 441.38 534.83 474.13 537.89 477.07C540.95 474.13 607.12 400.52 678.5 463.5C750.03 526.61 693.87 608.55 633 665L537.89 752.5L441.5 665C368.43 600.57 358.64 544.57 419.5 485.5Z"
+      fill="url(#bg)"
+      filter="url(#innerShade)"
+    />
+    <path
+      d="M314 207C300 224 292 246 292 271V707C292 756 323 796 365 812C329 791 306 752 306 707V271C306 238 323 209 349 193C335 195 323 200 314 207Z"
+      fill="#ffb092"
+      opacity="0.55"
+    />
+  </g>
+</svg>
