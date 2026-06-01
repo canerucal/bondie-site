@@ -3,8 +3,9 @@ const DEFAULT_LANGUAGE = "en";
 const LANGUAGE_STORAGE_KEY = "bondie.site.language";
 const TALLY_MIN_HEIGHT = 720;
 const TALLY_INITIAL_HEIGHT = String(TALLY_MIN_HEIGHT);
-const TALLY_READY_TIMEOUT = 2500;
 const SUPPORTED_LANGUAGES = ["en", "tr", "es"];
+const LANGUAGE_SLUGS = { en: "eng", tr: "tr", es: "esp" };
+const LANGUAGE_ALIASES = { en: "en", eng: "en", tr: "tr", es: "es", esp: "es" };
 
 const storeBadges = {
   en: {
@@ -407,9 +408,18 @@ const appStoreBadge = document.querySelector("#app-store-badge");
 const googlePlayBadge = document.querySelector("#google-play-badge");
 const languageOptions = document.querySelectorAll(".language-option");
 let supportFormFrame = document.querySelector("#support-form iframe");
-let supportFormRequestId = 0;
 
 const getDictionary = (language) => translations[language] ?? translations[DEFAULT_LANGUAGE];
+
+const getPathLanguage = () => {
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  return LANGUAGE_ALIASES[pathParts.at(-1)] ?? "";
+};
+
+const getQueryLanguage = () => {
+  const queryLanguage = new URLSearchParams(window.location.search).get("lang");
+  return LANGUAGE_ALIASES[queryLanguage] ?? "";
+};
 
 const getStoredLanguage = () => {
   try {
@@ -418,6 +428,32 @@ const getStoredLanguage = () => {
   } catch {
     return DEFAULT_LANGUAGE;
   }
+};
+
+const getInitialLanguage = () => getPathLanguage() || getQueryLanguage() || getStoredLanguage();
+
+const getLocalizedPath = (language) => {
+  const slug = LANGUAGE_SLUGS[language] ?? LANGUAGE_SLUGS[DEFAULT_LANGUAGE];
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const lastPart = pathParts.at(-1);
+
+  if (LANGUAGE_ALIASES[lastPart] || lastPart === "index.html") {
+    pathParts.pop();
+  }
+
+  const basePath = pathParts.length ? `/${pathParts.join("/")}` : "";
+  return `${basePath}/${slug}${window.location.hash}`;
+};
+
+const updateLanguageUrl = (language, { replace = false } = {}) => {
+  if (!window.history?.pushState) return;
+
+  const localizedPath = getLocalizedPath(language);
+  const currentPath = `${window.location.pathname}${window.location.hash}`;
+  if (localizedPath === currentPath && !window.location.search) return;
+
+  const method = replace ? "replaceState" : "pushState";
+  window.history[method](null, "", localizedPath);
 };
 
 const setMetaContent = (selector, value) => {
@@ -441,83 +477,21 @@ const stabilizeTallyFrameHeight = (frame) => {
   frame.setAttribute("height", String(Math.max(currentHeight || 0, TALLY_MIN_HEIGHT)));
 };
 
-const afterTallyFrameReady = (frame, callback) => {
-  const startedAt = Date.now();
-  let didComplete = false;
-
-  const check = () => {
-    if (didComplete) return;
-
-    const isReady = frame.getAttribute("src") && frame.getAttribute("style")?.includes("height:");
-    const timedOut = Date.now() - startedAt >= TALLY_READY_TIMEOUT;
-
-    if (isReady || timedOut) {
-      didComplete = true;
-      callback(isReady);
-      return;
-    }
-
-    window.setTimeout(check, 100);
-  };
-
-  frame.addEventListener("load", () => window.setTimeout(check, 120), { once: true });
-  window.setTimeout(check, TALLY_READY_TIMEOUT);
-};
-
 const updateSupportForm = (language) => {
   if (!supportFormFrame) return;
 
   const formUrl = tallyForms[language] ?? tallyForms[DEFAULT_LANGUAGE];
-  const embedHasStarted =
-    supportFormFrame.getAttribute("src") ||
-    supportFormFrame.dataset.tallyEmbedWidgetInitialized ||
-    window.Tally;
-
-  if (!embedHasStarted) {
+  if (supportFormFrame.dataset.tallySrc !== formUrl || supportFormFrame.getAttribute("src") !== formUrl) {
     supportFormFrame.dataset.tallySrc = formUrl;
     supportFormFrame.src = formUrl;
-    stabilizeTallyFrameHeight(supportFormFrame);
-    return;
+    supportFormFrame.removeAttribute("style");
   }
 
-  if (supportFormFrame.dataset.tallySrc === formUrl) {
-    stabilizeTallyFrameHeight(supportFormFrame);
-    return;
-  }
-
-  const requestId = (supportFormRequestId += 1);
-  const nextFrame = supportFormFrame.cloneNode(false);
-  nextFrame.dataset.tallySrc = formUrl;
-  delete nextFrame.dataset.tallyEmbedWidgetInitialized;
-  nextFrame.removeAttribute("src");
-  nextFrame.removeAttribute("style");
-  nextFrame.setAttribute("height", TALLY_INITIAL_HEIGHT);
-  stabilizeTallyFrameHeight(nextFrame);
-  nextFrame.classList.add("is-preloading");
-  supportFormFrame.after(nextFrame);
-
-  loadTallyEmbeds();
-
-  afterTallyFrameReady(nextFrame, (isReady) => {
-    if (requestId !== supportFormRequestId) {
-      nextFrame.remove();
-      return;
-    }
-
-    if (!isReady) {
-      nextFrame.remove();
-      return;
-    }
-
-    const previousFrame = supportFormFrame;
-    nextFrame.classList.remove("is-preloading");
-    stabilizeTallyFrameHeight(nextFrame);
-    supportFormFrame = nextFrame;
-    previousFrame?.remove();
-  });
+  supportFormFrame.setAttribute("height", TALLY_INITIAL_HEIGHT);
+  stabilizeTallyFrameHeight(supportFormFrame);
 };
 
-const applyLanguage = (language) => {
+const applyLanguage = (language, { updateUrl = false, replaceUrl = false } = {}) => {
   const dictionary = getDictionary(language);
   const activeLanguage = translations[language] ? language : DEFAULT_LANGUAGE;
 
@@ -574,6 +548,8 @@ const applyLanguage = (language) => {
     // Language still applies for this page view when storage is unavailable.
   }
 
+  if (updateUrl) updateLanguageUrl(activeLanguage, { replace: replaceUrl });
+
   document.documentElement.classList.remove("i18n-pending");
 };
 
@@ -597,7 +573,7 @@ sectionLinks.forEach((link) => {
 
 languageOptions.forEach((button) => {
   button.addEventListener("click", () => {
-    applyLanguage(button.dataset.lang);
+    applyLanguage(button.dataset.lang, { updateUrl: true });
     navLinks?.classList.remove("is-open");
     navToggle?.setAttribute("aria-expanded", "false");
   });
@@ -621,7 +597,7 @@ const observer = new IntersectionObserver(
 
 observedSections.forEach((section) => observer.observe(section));
 
-applyLanguage(getStoredLanguage());
+applyLanguage(getInitialLanguage(), { updateUrl: true, replaceUrl: true });
 window.addEventListener("load", () => {
   loadTallyEmbeds();
   stabilizeTallyFrameHeight(supportFormFrame);

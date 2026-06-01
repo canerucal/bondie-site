@@ -18,13 +18,20 @@
     <link rel="icon" href="assets/bondie-icon.svg" type="image/svg+xml" />
     <script>
       (() => {
+        const languageAliases = { en: "en", eng: "en", tr: "tr", es: "es", esp: "es" };
+        const pathParts = window.location.pathname.split("/").filter(Boolean);
+        const pathLanguage = languageAliases[pathParts.at(-1)];
+        const queryLanguage = languageAliases[new URLSearchParams(window.location.search).get("lang")];
         let storedLanguage;
         try {
           storedLanguage = localStorage.getItem("bondie.site.language");
         } catch {
-          return;
         }
 
+        const detectedLanguage = pathLanguage || queryLanguage || storedLanguage;
+        if (!detectedLanguage) return;
+
+        storedLanguage = detectedLanguage;
         if (!["en", "tr", "es"].includes(storedLanguage)) return;
 
         document.documentElement.lang = storedLanguage;
