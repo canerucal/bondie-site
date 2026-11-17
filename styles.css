@@ -1,3 +1,41 @@
+/* Fonts match the app: Allo Round for text, Fraunces (Soft) for headings. Self-hosted, SIL OFL 1.1. */
+@font-face {
+  font-family: "Allo Round";
+  src: url("assets/fonts/AlloRound-Regular.woff2") format("woff2");
+  font-weight: 100 450;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Allo Round";
+  src: url("assets/fonts/AlloRound-Medium.woff2") format("woff2");
+  font-weight: 451 550;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Allo Round";
+  src: url("assets/fonts/AlloRound-SemiBold.woff2") format("woff2");
+  font-weight: 551 650;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Allo Round";
+  src: url("assets/fonts/AlloRound-Bold.woff2") format("woff2");
+  font-weight: 651 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces Soft";
+  src: url("assets/fonts/Fraunces-SemiBold.woff2") format("woff2");
+  font-weight: 100 650;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces Soft";
+  src: url("assets/fonts/Fraunces-Bold.woff2") format("woff2");
+  font-weight: 651 900;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   --bg: #fbf7ef;
@@ -16,9 +54,9 @@
   --radius: 28px;
   --container: 1160px;
   --nav-height: 72px;
-  font-family:
-  -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI",
-    sans-serif;
+  --font-text: "Allo Round", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-title: "Fraunces Soft", Georgia, "Times New Roman", serif;
+  font-family: var(--font-text);
   font-kerning: normal;
   font-synthesis: none;
 }
@@ -108,8 +146,10 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-weight: 800;
-  letter-spacing: 0;
+  font-family: var(--font-title);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .brand img {
@@ -219,9 +259,7 @@ textarea {
 h1,
 h2,
 h3 {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI",
-    sans-serif;
+  font-family: var(--font-title);
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
@@ -236,25 +274,26 @@ p {
 
 h1 {
   margin-bottom: 22px;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(58px, 9vw, 118px);
-  line-height: 0.94;
-  letter-spacing: -0.035em;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
 }
 
 h2 {
   margin-bottom: 22px;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(38px, 6.4vw, 78px);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 
 h3 {
   margin-bottom: 8px;
+  font-weight: 600;
   font-size: 20px;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .hero-lede,
@@ -755,7 +794,13 @@ html[lang="es"] #google-play-badge {
   h1 {
     margin-bottom: 18px;
     font-size: clamp(48px, 17vw, 64px);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
+  }
+
+  /* Fraunces is wider than the old system font; keep long Turkish words inside the screen. */
+  h2 {
+    font-size: clamp(30px, 9vw, 38px);
+    overflow-wrap: break-word;
   }
 
   .hero-lede {
