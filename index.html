@@ -8,7 +8,7 @@
       name="description"
       content="Bondie is a local-first iOS app with screen-free, age-aware, safe activity ideas for parents and caregivers."
     />
-    <meta name="theme-color" content="#fbf7ef" />
+    <meta name="theme-color" content="#fcf8ef" />
     <meta property="og:title" content="Bondie | Screen-free activity ideas" />
     <meta
       property="og:description"
@@ -19,6 +19,7 @@
     <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <script>
+      document.documentElement.classList.add("js");
       (() => {
         const languageAliases = { en: "en", eng: "en", tr: "tr", es: "es", esp: "es" };
         const pathParts = window.location.pathname.split("/").filter(Boolean);
@@ -30,7 +31,10 @@
         } catch {
         }
 
-        const detectedLanguage = pathLanguage || queryLanguage || storedLanguage;
+        const browserLanguage = (navigator.languages ?? [navigator.language])
+          .map((language) => languageAliases[String(language).slice(0, 2).toLowerCase()])
+          .find(Boolean);
+        const detectedLanguage = pathLanguage || queryLanguage || storedLanguage || browserLanguage;
         if (!detectedLanguage) return;
 
         storedLanguage = detectedLanguage;
@@ -50,369 +54,554 @@
     <header class="site-header" id="site-header">
       <nav class="nav-shell" aria-label="Main navigation" data-i18n-attr="aria-label:nav.aria">
         <a class="brand" href="#hero" aria-label="Bondie home" data-i18n-attr="aria-label:brand.aria">
-          <img src="assets/icon-192.png" alt="" width="34" height="34" />
+          <img src="assets/images/bondie-mark.png" alt="" width="132" height="161" />
           <span>Bondie</span>
         </a>
         <div class="nav-links" id="nav-links">
-          <a href="#app" class="nav-link" data-i18n="nav.app">App</a>
-          <a href="#privacy" class="nav-link" data-i18n="nav.privacy">Privacy</a>
-          <a href="#terms" class="nav-link" data-i18n="nav.terms">Terms</a>
-          <a href="#safety" class="nav-link" data-i18n="nav.safety">Safety</a>
-          <a href="#support" class="nav-link" data-i18n="nav.support">Support</a>
+          <a href="#today" class="nav-link" data-i18n="nav.how">How it works</a>
+          <a href="#categories" class="nav-link" data-i18n="nav.categories">Categories</a>
+          <a href="#trust" class="nav-link" data-i18n="nav.safety">Safety</a>
+          <a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a>
         </div>
-        <div class="nav-actions">
-          <div class="language-switcher" aria-label="Language" data-i18n-attr="aria-label:language.aria">
-            <button class="language-option is-active" type="button" data-lang="en" aria-pressed="true" aria-label="English">
-              <span aria-hidden="true">🇬🇧</span>
-            </button>
-            <button class="language-option" type="button" data-lang="tr" aria-pressed="false" aria-label="Türkçe">
-              <span aria-hidden="true">🇹🇷</span>
-            </button>
-            <button class="language-option" type="button" data-lang="es" aria-pressed="false" aria-label="Español">
-              <span aria-hidden="true">🇪🇸</span>
-            </button>
-          </div>
-          <button
-            class="nav-toggle"
-            type="button"
-            aria-label="Open menu"
-            aria-expanded="false"
-            data-i18n-attr="aria-label:navToggle.aria"
+        <div class="nav-stores">
+          <a
+            class="nav-store"
+            href="https://apps.apple.com/app/id6775076025"
+            target="_blank"
+            rel="noopener"
+            aria-label="Download Bondie on the App Store"
+            data-i18n-attr="aria-label:store.appLabel"
           >
-            <span></span>
-            <span></span>
-          </button>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.9-1.1-2.9-4.3ZM13.9 5.3c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5Z" /></svg>
+          </a>
+          <span
+            class="nav-store nav-store-soon"
+            role="img"
+            aria-label="Google Play coming soon"
+            title="Google Play coming soon"
+            data-i18n-attr="aria-label:store.playLabel;title:store.playLabel"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.6 2.3c-.2.3-.3.6-.3 1v17.4c0 .4.1.7.3 1l9.6-9.7-9.6-9.7Zm10.5 10.6 2.8 2.8-11.4 6.5 8.6-9.3Zm0-1.8L5.5 1.8l11.4 6.5-2.8 2.8Zm3.6-2.3 3.3 1.9c.9.5.9 1.8 0 2.3l-3.3 1.9-3-3 3-3.1Z" /></svg>
+          </span>
         </div>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+          data-i18n-attr="aria-label:navToggle.aria"
+        >
+          <span></span>
+          <span></span>
+        </button>
       </nav>
     </header>
 
     <main>
-      <section class="hero section" id="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow" data-i18n="hero.eyebrow">Tiny Moments, Big Bonds</p>
-            <h1>Bondie</h1>
-            <p class="hero-lede" data-i18n="hero.lede">
-              Short, safe, connection-focused activity ideas based on your child's age, energy,
-              and where you are.
-            </p>
-            <div class="hero-actions">
-              <a
-                class="store-badge-link app-store-link app-store-link-disabled"
-                id="app-store-link"
-                aria-disabled="true"
-                role="link"
-                title="The App Store link will be enabled when published"
-                data-i18n-attr="title:store.appTitle;aria-label:store.appLabel"
-              >
-                <img
-                  id="app-store-badge"
-                  class="store-badge-image"
-                  src="assets/badges/app-store-en.svg"
-                  alt="Download on the App Store"
-                  width="250"
-                  height="83"
-                />
-              </a>
-              <div class="store-badge-soon" aria-label="Google Play coming soon" data-i18n-attr="aria-label:store.playLabel">
-                <img
-                  id="google-play-badge"
-                  class="store-badge-image"
-                  src="assets/badges/google-play-en.png"
-                  alt="Get it on Google Play"
-                  width="646"
-                  height="250"
-                />
-                <span class="store-badge-status" data-i18n="store.soon">Coming soon</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-card-gallery" aria-label="Bondie app card examples" data-i18n-attr="aria-label:hero.galleryAria">
-            <img
-              class="hero-card-shot"
-              src="assets/images/hero-card-1-en.png"
-              alt="Story Chain activity card in the Bondie app"
-              data-card-image="heroStory"
-              data-i18n-attr="alt:hero.cardOneAlt"
-            />
-            <img
-              class="hero-card-shot"
-              src="assets/images/hero-card-2-en.png"
-              alt="Story Chain benefit card in the Bondie app"
-              data-card-image="heroBenefit"
-              data-i18n-attr="alt:hero.cardTwoAlt"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section class="section app-section" id="app">
-        <div class="container narrow">
-          <p class="eyebrow" data-i18n="app.eyebrow">App</p>
-          <h2 data-i18n="app.title">Ideas that reduce screen time and make shared time easier.</h2>
-          <p class="section-lede" data-i18n="app.lede">
-            Bondie gives parents activity ideas that do not require long preparation. Every
-            suggestion is short, adaptable, and simple enough to fit into daily life.
+      <section class="hero" id="hero">
+        <div class="container hero-inner">
+          <h1 data-i18n-html="hero.title">Tiny moments, big <span class="accent">bonds</span></h1>
+          <p class="hero-lede" data-i18n="hero.lede">
+            Short, screen-free games to play together with your child.
           </p>
-        </div>
-
-        <div class="container app-showcase">
-          <div class="showcase-copy">
-            <div class="feature-line">
-              <span>01</span>
-              <div>
-                <h3 data-i18n="feature.oneTitle">Suggestions that fit you</h3>
-                <p data-i18n="feature.oneText">
-                  Bondie suggests activities based on age, energy level, category, and your setting.
-                </p>
-              </div>
-            </div>
-            <div class="feature-line">
-              <span>02</span>
-              <div>
-                <h3 data-i18n="feature.twoTitle">Clear details on every card</h3>
-                <p data-i18n="feature.twoText">
-                  How to play, what you need, how long it takes, and what to watch for: all in one card.
-                </p>
-              </div>
-            </div>
-            <div class="feature-line">
-              <span>03</span>
-              <div>
-                <h3 data-i18n="feature.threeTitle">Discover, choose, save</h3>
-                <p data-i18n="feature.threeText">
-                  Discover new activities, add favorites, and find them again easily.
-                </p>
-              </div>
-            </div>
-            <div class="feature-line">
-              <span>04</span>
-              <div>
-                <h3 data-i18n="feature.fourTitle">Profile and language settings</h3>
-                <p data-i18n="feature.fourText">
-                  Child profile, avatars, and language preference are stored on your device.
-                </p>
-              </div>
+          <div class="store-row">
+            <a
+              class="store-badge-link"
+              href="https://apps.apple.com/app/id6775076025"
+              target="_blank"
+              rel="noopener"
+              aria-label="Download Bondie on the App Store"
+              data-i18n-attr="aria-label:store.appLabel"
+            >
+              <img class="store-badge-image app-store-badge" src="assets/badges/app-store-en.svg" alt="" width="250" height="83" />
+            </a>
+            <div class="store-badge-soon" role="img" aria-label="Google Play coming soon" data-i18n-attr="aria-label:store.playLabel">
+              <img class="store-badge-image google-play-badge" src="assets/badges/google-play-en.png" alt="" width="646" height="250" />
+              <span class="store-badge-status" data-i18n="store.soon">Coming soon</span>
             </div>
           </div>
-
-          <div class="activity-strip" aria-label="Bondie activity images" data-i18n-attr="aria-label:app.activityAria">
-            <figure>
-              <img
-                src="assets/images/app-card-empathy-en.png"
-                alt="Empathy Glasses activity card in the Bondie app"
-                data-card-image="empathy"
-                data-i18n-attr="alt:app.empathyAlt"
-              />
-            </figure>
-            <figure>
-              <img
-                src="assets/images/app-card-club-symbol-en.png"
-                alt="Secret Club Symbol activity card in the Bondie app"
-                data-card-image="club"
-                data-i18n-attr="alt:app.clubAlt"
-              />
-            </figure>
-            <figure>
-              <img
-                src="assets/images/app-card-object-clue-en.png"
-                alt="Object Clue activity card in the Bondie app"
-                data-card-image="object"
-                data-i18n-attr="alt:app.objectAlt"
-              />
-            </figure>
+          <div class="hero-stage" aria-hidden="true">
+            <img src="assets/images/bird-listening-pause.webp" alt="" width="512" height="512" />
+            <img src="assets/images/marble-run-remix.webp" alt="" width="512" height="512" />
+            <img src="assets/images/blanket-fort.webp" alt="" width="512" height="512" />
+            <img src="assets/images/book-guessing.webp" alt="" width="512" height="512" />
           </div>
         </div>
       </section>
 
-      <section class="section legal-section" id="privacy">
+      <section class="section" id="today">
         <div class="container split">
-          <div>
-            <p class="eyebrow" data-i18n="privacy.eyebrow">Privacy</p>
-            <h2 data-i18n="privacy.title">Privacy Policy</h2>
-            <p class="updated" data-i18n="common.updated">Last updated: May 30, 2026</p>
+          <div class="split-copy reveal">
+            <p class="eyebrow" data-i18n="today.eyebrow">Card of the day</p>
+            <h2 data-i18n="today.title">What shall we play today?</h2>
+            <p class="section-lede" data-i18n="today.text">
+              Coming up with a new idea at the end of the day is hard. Bondie suggests one card
+              every day, so your energy goes into playing, not deciding.
+            </p>
+            <button class="button" type="button" id="draw-card" data-i18n="today.button">Draw another card</button>
           </div>
-          <div class="legal-copy">
-            <h3 data-i18n="privacy.dataTitle">What data does Bondie store?</h3>
-            <p data-i18n="privacy.dataText">
-              Bondie stores parent name, child name, child age, avatars, activity preferences,
-              favorites, completed activities, and language preference in app storage on the
-              device. This information is entered by the parent in the app or created locally
-              while using the app. Bondie uses it to personalize the experience, show age- and
-              preference-aware activity suggestions, and remember favorites and completed activities.
-            </p>
-            <h3 data-i18n="privacy.storageTitle">Where is data kept?</h3>
-            <p data-i18n="privacy.storageText">
-              Bondie does not use an external database for this profile and activity data. This
-              data is not sent off the device; the Bondie team and third-party service providers
-              cannot access this local data.
-            </p>
-            <h3 data-i18n="privacy.thirdTitle">Third-party sharing</h3>
-            <p data-i18n="privacy.thirdText">
-              Bondie does not share in-app profile or activity data with third parties for
-              advertising, tracking, analytics, or marketing. The app does not use this data to
-              track users across different apps or websites.
-            </p>
-            <h3 data-i18n="privacy.supportTitle">Support form and contact data</h3>
-            <p data-i18n="privacy.supportText">
-              When you use the support form, your name, email address, selected topic, and message
-              are sent to us. This information is used only to answer your support request, review
-              privacy or safety reports, and follow up on bug feedback.
-            </p>
-            <h3 data-i18n="privacy.formTitle">Form security and email delivery</h3>
-            <p data-i18n="privacy.formText">
-              The support form is provided by Tally. Tally may process form submissions, apply
-              security checks to reduce abuse, and forward your message to Bondie support. Tally
-              may also provide privacy-friendly, anonymous form insights such as visits, source,
-              device type, browser, and approximate location. Bondie does not use this information
-              for advertising or tracking.
-            </p>
-            <h3 data-i18n="privacy.retentionTitle">Data retention and deletion</h3>
-            <p data-i18n-html="privacy.retentionText">
-              Local app data is kept on the device while the user continues using the app. When
-              the app is deleted, this data may be removed by the operating system. Bondie does
-              not keep a separate server-side account or backup for this data. Your name, email
-              address, selected topic, and message submitted through the support form may be
-              processed by Tally and kept in the Bondie support mailbox so we can respond to your
-              request. These records are used only for support, privacy, safety reports, or bug
-              feedback follow-up. For privacy questions, deletion of support records, or help
-              deleting local data, you can use the <a class="support-anchor" href="#support-form">support form</a>.
-            </p>
-            <h3 data-i18n="privacy.notCollectTitle">What does Bondie not collect?</h3>
-            <p data-i18n="privacy.notCollectText">
-              The current app experience does not ask for a child's email address, phone number,
-              precise location, photos, contacts, microphone, or camera. Bondie does not sell
-              personal information.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section legal-section muted" id="terms">
-        <div class="container split">
-          <div>
-            <p class="eyebrow" data-i18n="terms.eyebrow">Terms</p>
-            <h2 data-i18n="terms.title">Terms of Use</h2>
-            <p class="updated" data-i18n="common.updated">Last updated: May 30, 2026</p>
-          </div>
-          <div class="legal-copy">
-            <h3 data-i18n="terms.scopeTitle">Scope of these terms</h3>
-            <p data-i18n="terms.scopeText">
-              These terms apply when you use the Bondie app and the activity content provided by
-              Bondie. By using the app, you agree to these terms and the Privacy Policy.
-            </p>
-            <h3 data-i18n="terms.appleTitle">Apple standard EULA</h3>
-            <p data-i18n="terms.appleText">
-              When Bondie is downloaded through the App Store, Apple's standard end user license
-              agreement applies to the licensed use of the app. These terms do not replace Apple's
-              standard license agreement; they only provide additional notes about Bondie's use.
-            </p>
-            <h3 data-i18n="terms.useTitle">Use of the app</h3>
-            <p data-i18n="terms.useText">
-              Bondie offers screen-free activity ideas for families. The app is designed for
-              adults who choose, adapt, and supervise activities for children. Activities may not
-              be suitable for every child, family, environment, or condition; users should assess
-              suggestions based on their own situation.
-            </p>
-            <h3 data-i18n="terms.adviceTitle">Not professional advice</h3>
-            <p data-i18n="terms.adviceText">
-              Bondie is not medical, therapeutic, educational, or childcare professional advice.
-              For concerns about a child's health, development, behavior, or safety, consult a
-              qualified professional.
-            </p>
-            <h3 data-i18n="terms.parentTitle">Parent responsibility</h3>
-            <p data-i18n="terms.parentText">
-              Before starting an activity, the parent or caregiver is responsible for checking
-              materials, space, weather, allergies, choking risks, and supervision. If an activity
-              feels unsafe, stressful, or unsuitable, it should be stopped.
-            </p>
-            <h3 data-i18n="terms.contentTitle">Content changes</h3>
-            <p data-i18n="terms.contentText">
-              Bondie may update, change, or remove activity content, categories, and features from
-              time to time. The app is not guaranteed to be uninterrupted, error-free, or identical
-              on every device.
-            </p>
-            <h3 data-i18n="terms.contactTitle">Contact</h3>
-            <p data-i18n-html="terms.contactText">
-              For terms of use, app support, safety reports, or privacy requests, you can use the
-              <a class="support-anchor" href="#support-form">support form</a>.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section legal-section" id="safety">
-        <div class="container split">
-          <div>
-            <p class="eyebrow" data-i18n="safety.eyebrow">Safety</p>
-            <h2 data-i18n="safety.title">Safety Guide</h2>
-            <p class="updated" data-i18n="safety.updated">A short adult check before every activity.</p>
-          </div>
-          <div class="safety-grid">
-            <article>
-              <h3 data-i18n="safety.oneTitle">Adult supervision</h3>
-              <p data-i18n="safety.oneText">
-                Every activity should be chosen, adapted, and supervised by a responsible adult.
-              </p>
+          <div class="day-deck reveal" id="day-deck" aria-live="polite">
+            <article class="day-card tone-peach is-active">
+              <img src="assets/images/bubble-chase.webp" alt="" width="512" height="512" loading="lazy" />
+              <h3 data-i18n="act.bubble.title">Bubble Chase</h3>
+              <p class="meta" data-i18n="act.bubble.meta">10 min · Ages 2–6 · Move</p>
+              <p data-i18n="act.bubble.blurb">Chase bubbles gently and pop them with hands or feet.</p>
             </article>
-            <article>
-              <h3 data-i18n="safety.twoTitle">Space check</h3>
-              <p data-i18n="safety.twoText">
-                Remove sharp objects, slippery surfaces, cables, and tripping risks.
-              </p>
+            <article class="day-card tone-rose">
+              <img src="assets/images/bravery-ladder.webp" alt="" width="512" height="512" loading="lazy" />
+              <h3 data-i18n="act.ladder.title">Bravery Ladder</h3>
+              <p class="meta" data-i18n="act.ladder.meta">10 min · Ages 4–10 · Feel</p>
+              <p data-i18n="act.ladder.blurb">Break a brave goal into tiny ladder steps that feel possible.</p>
             </article>
-            <article>
-              <h3 data-i18n="safety.threeTitle">Material check</h3>
-              <p data-i18n="safety.threeText">
-                Use age-appropriate materials; check small parts, batteries, magnets, and allergens.
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="safety.fourTitle">Age and development</h3>
-              <p data-i18n="safety.fourText">
-                Assess suggestions based on the child's age, development, interests, and readiness that day.
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="safety.fiveTitle">Adapt and stop</h3>
-              <p data-i18n="safety.fiveText">
-                If the child seems tired, overwhelmed, uninterested, or unsafe, stop the activity.
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="safety.sixTitle">Health and emergencies</h3>
-              <p data-i18n="safety.sixText">
-                If injury, allergic symptoms, or health risks appear, stop the activity and seek appropriate professional help.
-              </p>
+            <article class="day-card tone-sky">
+              <img src="assets/images/color-hunt.webp" alt="" width="512" height="512" loading="lazy" />
+              <h3 data-i18n="act.hunt.title">Color Hunt</h3>
+              <p class="meta" data-i18n="act.hunt.meta">10 min · Ages 2–7 · Think</p>
+              <p data-i18n="act.hunt.blurb">Pick a color and find matching objects around you.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section support-section" id="support">
-        <div class="container support-grid">
-          <div>
-            <p class="eyebrow" data-i18n="support.eyebrow">Support</p>
-            <h2 data-i18n="support.title">Need help?</h2>
-            <p class="section-lede" data-i18n-html="support.lede">
-              Write to us about the app, privacy, safety, activity feedback, or bug reports.
-              For direct email: <a href="mailto:hello.bondie.app@gmail.com">hello.bondie.app@gmail.com</a>.
-            </p>
+      <section class="section" id="card">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 data-i18n="card.title">What's inside a card?</h2>
+            <p class="section-lede" data-i18n="card.lede">Every game is a single card. Reading it takes less than a minute.</p>
           </div>
+          <div class="scene" id="card-scene" data-face="front">
+            <div class="scene-sticky">
+              <div class="app-poster scene-card tone-lavender">
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="cat.create">Create</p>
+                  <h3 data-i18n="card.name">Box Adventure</h3>
+                  <p class="poster-blurb" data-i18n="card.blurb">Turn a cardboard box into a rocket, boat, cave, car, or house.</p>
+                </div>
+                <div class="scene-faces">
+                  <div class="face face-front" data-face="front">
+                    <div class="poster-art">
+                      <img src="assets/images/box-adventure.webp" alt="" width="512" height="512" loading="lazy" />
+                    </div>
+                    <div class="poster-foot">
+                      <dl class="poster-facts">
+                        <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="card.time">15 min</dd></div>
+                        <div><dt data-i18n="fact.ages">Ages</dt><dd>2–8</dd></div>
+                        <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="card.place">Indoor</dd></div>
+                      </dl>
+                    </div>
+                  </div>
+                  <div class="face face-panel" data-face="steps">
+                    <p class="face-title" data-i18n="card.stepsTitle">Steps</p>
+                    <ol>
+                      <li data-i18n="card.step1">Choose what the box will become.</li>
+                      <li data-i18n="card.step2">Decorate or arrange the box.</li>
+                      <li data-i18n="card.step3">Act out an adventure inside or around it.</li>
+                    </ol>
+                    <p class="meta" data-i18n="card.materials">Materials: Cardboard box</p>
+                  </div>
+                  <div class="face face-panel" data-face="why">
+                    <p class="face-title" data-i18n="card.whyTitle">Why it helps</p>
+                    <dl>
+                      <div><dt data-i18n="card.why1Label">Imagination</dt><dd data-i18n="card.why1Text">Invites the child to turn ordinary things into stories, characters, or new possibilities.</dd></div>
+                      <div><dt data-i18n="card.why2Label">Planning</dt><dd data-i18n="card.why2Text">Supports early sequencing by asking what comes next.</dd></div>
+                    </dl>
+                  </div>
+                  <div class="face face-panel" data-face="safety">
+                    <p class="face-title" data-i18n="card.safetyTitle">Safety note</p>
+                    <ul>
+                      <li data-i18n="safety.oneTitle">Adult supervision</li>
+                      <li data-i18n="safety.twoTitle">Space check</li>
+                      <li data-i18n="safety.threeTitle">Material check</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="poster-dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="scene-steps">
+              <div class="scene-step" data-face="front">
+                <h3 data-i18n="card.s0Title">At a glance</h3>
+                <p data-i18n="card.s0Text">Time, ages, and place sit right on the front. You know at once whether it fits.</p>
+              </div>
+              <div class="scene-step" data-face="steps">
+                <h3 data-i18n="card.s1Title">Three short steps</h3>
+                <p data-i18n="card.s1Text">How to play, what you need, how long it takes. Read it once, then put the phone away.</p>
+              </div>
+              <div class="scene-step" data-face="why">
+                <h3 data-i18n="card.s2Title">Why it helps</h3>
+                <p data-i18n="card.s2Text">Each card tells you in a few sentences what the game gives your child.</p>
+              </div>
+              <div class="scene-step" data-face="safety">
+                <h3 data-i18n="card.s3Title">Safety note</h3>
+                <p data-i18n="card.s3Text">A short check of the space and materials before you start. Some games add warnings of their own.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div class="tally-panel" id="support-form">
-            <iframe
-              data-tally-src="https://tally.so/embed/Bz0QyR?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-              loading="eager"
-              width="100%"
-              height="720"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
-              title="Bondie support form"
-              data-i18n-attr="title:support.formTitle"
-            ></iframe>
+      <section class="section" id="foryou">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 data-i18n="foryou.title">A deck shuffled for you</h2>
+            <p class="section-lede" data-i18n="foryou.lede">We ask only two things: their age and what they love. Bondie does the rest.</p>
+          </div>
+          <div class="setup-grid">
+            <div class="app-poster setup-age tone-sun reveal">
+              <div class="poster-head">
+                <h3 data-i18n="foryou.ageTitle">How old is your child?</h3>
+                <p class="poster-blurb" data-i18n="foryou.ageBody">We'll pick games that fit their age.</p>
+              </div>
+              <div class="poster-art age-area">
+                <button type="button" id="age-down" aria-label="Decrease age" data-i18n-attr="aria-label:foryou.ageDown">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12" /></svg>
+                </button>
+                <p><output id="age-value">4</output><span data-i18n="foryou.ageUnit">years old</span></p>
+                <button type="button" id="age-up" aria-label="Increase age" data-i18n-attr="aria-label:foryou.ageUp">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12M12 6v12" /></svg>
+                </button>
+              </div>
+              <div class="poster-foot"></div>
+            </div>
+            <div class="app-poster setup-interests reveal">
+              <div class="poster-head">
+                <h3 data-i18n="foryou.likesTitle">What do they love?</h3>
+                <p class="poster-blurb" data-i18n="foryou.likesHint">Pick as many as you like. Pick none and you get cards from all of them.</p>
+              </div>
+              <div class="interest-rows" id="interest-rows">
+                <button class="interest-row tone-mint" type="button" data-cat="calm" aria-pressed="false">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.calm">Calm</strong><span data-i18n="cat.calmHint">Slow down, listen</span></span>
+                  <img src="assets/images/garden-water-helper.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+                <button class="interest-row tone-lavender" type="button" data-cat="create" aria-pressed="true">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.create">Create</strong><span data-i18n="cat.createHint">Draw, build, imagine</span></span>
+                  <img src="assets/images/nature-paint-brushes.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+                <button class="interest-row tone-rose" type="button" data-cat="feel" aria-pressed="false">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.feel">Feel</strong><span data-i18n="cat.feelHint">Feel it, say it</span></span>
+                  <img src="assets/images/peekaboo-smiles.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+                <button class="interest-row tone-peach" type="button" data-cat="move" aria-pressed="true">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.move">Move</strong><span data-i18n="cat.moveHint">Jump, run, balance</span></span>
+                  <img src="assets/images/gravity-shift.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+                <button class="interest-row tone-sun" type="button" data-cat="talk" aria-pressed="false">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.talk">Talk</strong><span data-i18n="cat.talkHint">Ask, tell, listen</span></span>
+                  <img src="assets/images/consonant-only-talk.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+                <button class="interest-row tone-sky" type="button" data-cat="think" aria-pressed="false">
+                  <span class="interest-check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+                  <span class="interest-copy"><strong data-i18n="cat.think">Think</strong><span data-i18n="cat.thinkHint">Find, count, solve</span></span>
+                  <img src="assets/images/map-the-room.webp" alt="" width="512" height="512" loading="lazy" />
+                </button>
+              </div>
+            </div>
+            <div class="ready-stack reveal" id="ready-stack" aria-live="polite">
+              <div class="app-poster ready-poster tone-mint" data-cat="calm" hidden>
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.calm.title">Garden Water Helper</h3>
+                  <p class="poster-blurb" data-i18n="ready.calm.blurb">Help water one plant slowly and carefully.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/garden-water-helper.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.calm.time">10 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>2–7</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.calm.place">Outdoor</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="app-poster ready-poster tone-lavender" data-cat="create">
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.create.title">Nature Paint Brushes</h3>
+                  <p class="poster-blurb" data-i18n="ready.create.blurb">Use safe leaves, grass, or twigs as brushes to make textured art.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/nature-paint-brushes.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.create.time">10 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>4–10</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.create.place">Outdoor</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="app-poster ready-poster tone-rose" data-cat="feel" hidden>
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.feel.title">Peekaboo Smiles</h3>
+                  <p class="poster-blurb" data-i18n="ready.feel.blurb">Hide your face, then come back with a warm smile.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/peekaboo-smiles.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.feel.time">3 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>0–1</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.feel.place">Anywhere</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="app-poster ready-poster tone-peach" data-cat="move" hidden>
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.move.title">Gravity Shift</h3>
+                  <p class="poster-blurb" data-i18n="ready.move.blurb">Pretend gravity has moved to a wall, corner, or chair and adjust your body to match.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/gravity-shift.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.move.time">10 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>4–10</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.move.place">Indoor</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="app-poster ready-poster tone-sun" data-cat="talk" hidden>
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.talk.title">Consonant-Only Talk</h3>
+                  <p class="poster-blurb" data-i18n="ready.talk.blurb">Try speaking by dropping vowel sounds and letting the other person decode it.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/consonant-only-talk.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.talk.time">10 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>7–10</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.talk.place">Anywhere</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="app-poster ready-poster tone-sky" data-cat="think" hidden>
+                <div class="poster-head">
+                  <p class="poster-kicker" data-i18n="foryou.readyKicker">Your deck is ready</p>
+                  <h3 data-i18n="ready.think.title">Map the Room</h3>
+                  <p class="poster-blurb" data-i18n="ready.think.blurb">Draw a simple map of the room and mark where things are.</p>
+                </div>
+                <div class="poster-art">
+                  <img src="assets/images/map-the-room.webp" alt="" width="512" height="512" loading="lazy" />
+                </div>
+                <div class="poster-foot">
+                  <dl class="poster-facts">
+                    <div><dt data-i18n="fact.time">Time</dt><dd data-i18n="ready.think.time">15 min</dd></div>
+                    <div><dt data-i18n="fact.ages">Ages</dt><dd>5–10</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd data-i18n="ready.think.place">Indoor</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="categories">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2 data-i18n="cat.title">Six categories, one deck</h2>
+          </div>
+          <ul class="category-grid">
+            <li class="tone-mint reveal">
+              <div><strong data-i18n="cat.calm">Calm</strong><span data-i18n="cat.calmHint">Slow down, listen</span></div>
+              <img src="assets/images/garden-water-helper.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+            <li class="tone-lavender reveal">
+              <div><strong data-i18n="cat.create">Create</strong><span data-i18n="cat.createHint">Draw, build, imagine</span></div>
+              <img src="assets/images/nature-paint-brushes.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+            <li class="tone-rose reveal">
+              <div><strong data-i18n="cat.feel">Feel</strong><span data-i18n="cat.feelHint">Feel it, say it</span></div>
+              <img src="assets/images/peekaboo-smiles.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+            <li class="tone-peach reveal">
+              <div><strong data-i18n="cat.move">Move</strong><span data-i18n="cat.moveHint">Jump, run, balance</span></div>
+              <img src="assets/images/gravity-shift.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+            <li class="tone-sun reveal">
+              <div><strong data-i18n="cat.talk">Talk</strong><span data-i18n="cat.talkHint">Ask, tell, listen</span></div>
+              <img src="assets/images/consonant-only-talk.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+            <li class="tone-sky reveal">
+              <div><strong data-i18n="cat.think">Think</strong><span data-i18n="cat.thinkHint">Find, count, solve</span></div>
+              <img src="assets/images/map-the-room.webp" alt="" width="512" height="512" loading="lazy" />
+            </li>
+          </ul>
+          <div class="pair-grid">
+            <div class="pair-tile tone-sky reveal">
+              <div>
+                <h3 data-i18n="explore.title">Explore</h3>
+                <p data-i18n="explore.text">The whole catalog, freshly shuffled every time. Filter by age, energy, and place.</p>
+                <div class="filter-chips" aria-hidden="true">
+                  <span data-i18n="explore.age">Age</span>
+                  <span data-i18n="explore.energy">Energy</span>
+                  <span data-i18n="explore.where">Place</span>
+                </div>
+              </div>
+              <img src="assets/images/flashlight-search.webp" alt="" width="512" height="512" loading="lazy" />
+            </div>
+            <div class="pair-tile tone-rose reveal">
+              <div>
+                <h3 data-i18n="fav.title">Favorites</h3>
+                <p data-i18n="fav.text">Games you tap the heart on gather here: the small library you keep coming back to.</p>
+                <ul class="fav-list" aria-hidden="true">
+                  <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 20.5S3.5 15.4 3.5 9.2A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.5 2.8c0 6.2-8.5 11.3-8.5 11.3Z" /></svg><span data-i18n="card.name">Box Adventure</span></li>
+                  <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 20.5S3.5 15.4 3.5 9.2A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.5 2.8c0 6.2-8.5 11.3-8.5 11.3Z" /></svg><span data-i18n="ready.think.title">Map the Room</span></li>
+                </ul>
+              </div>
+              <img src="assets/images/happy-memory-box.webp" alt="" width="512" height="512" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="trust">
+        <div class="container">
+          <div class="poster poster-mint">
+            <div class="section-head reveal">
+              <h2 data-i18n="trust.title">Play with peace of mind</h2>
+              <p class="section-lede" data-i18n="safety.updated">A short adult check before every activity.</p>
+            </div>
+            <div class="safety-grid">
+              <article class="reveal">
+                <h3 data-i18n="safety.oneTitle">Adult supervision</h3>
+                <p data-i18n="safety.oneText">
+                  Every activity should be chosen, adapted, and supervised by a responsible adult.
+                </p>
+              </article>
+              <article class="reveal">
+                <h3 data-i18n="safety.twoTitle">Space check</h3>
+                <p data-i18n="safety.twoText">
+                  Remove sharp objects, slippery surfaces, cables, and tripping risks.
+                </p>
+              </article>
+              <article class="reveal">
+                <h3 data-i18n="safety.threeTitle">Material check</h3>
+                <p data-i18n="safety.threeText">
+                  Use age-appropriate materials; check small parts, batteries, magnets, and allergens.
+                </p>
+              </article>
+              <article class="reveal">
+                <h3 data-i18n="safety.fourTitle">Age and development</h3>
+                <p data-i18n="safety.fourText">
+                  Assess suggestions based on the child's age, development, interests, and readiness that day.
+                </p>
+              </article>
+              <article class="reveal">
+                <h3 data-i18n="safety.fiveTitle">Adapt and stop</h3>
+                <p data-i18n="safety.fiveText">
+                  If the child seems tired, overwhelmed, uninterested, or unsafe, stop the activity.
+                </p>
+              </article>
+              <article class="reveal">
+                <h3 data-i18n="safety.sixTitle">Health and emergencies</h3>
+                <p data-i18n="safety.sixText">
+                  If injury, allergic symptoms, or health risks appear, stop the activity and seek appropriate professional help.
+                </p>
+              </article>
+            </div>
+          </div>
+          <div class="fact-bar reveal">
+            <div>
+              <span class="fact-icon tone-sky"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg></span>
+              <h3 data-i18n="trust.f1Title">No account</h3>
+              <p data-i18n="trust.f1Text">No sign-up, email, or password. Download and play.</p>
+            </div>
+            <div>
+              <span class="fact-icon tone-sun"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5" /><path d="M11 17.5h2" /></svg></span>
+              <h3 data-i18n="trust.f2Title">Your data stays on your device</h3>
+              <p data-i18n="trust.f2Text">Your profile, favorites, and preferences are stored only on your phone.</p>
+            </div>
+            <div>
+              <span class="fact-icon tone-rose"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z" /><circle cx="12" cy="12" r="2.5" /><path d="M4 4l16 16" /></svg></span>
+              <h3 data-i18n="trust.f3Title">No ads, no tracking</h3>
+              <p data-i18n="trust.f3Text">Nothing is shared with anyone for advertising, tracking, or analytics.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container faq-grid">
+          <div class="faq-head reveal">
+            <h2 data-i18n="faq.title">Questions, answered</h2>
+            <p class="section-lede" data-i18n="faq.lede">What people ask most before their first card.</p>
+            <div class="faq-contact">
+              <h3 data-i18n="faq.contactTitle">Have another question?</h3>
+              <p data-i18n="faq.contactText">Write to us about the app, privacy, safety, or a game.</p>
+              <a class="button" href="mailto:hello@brocan.co">hello@brocan.co</a>
+              <nav class="contact-links" aria-label="Legal">
+                <a href="#privacy"><span data-i18n="privacy.title">Privacy Policy</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+                <a href="#terms"><span data-i18n="terms.title">Terms of Use</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+              </nav>
+            </div>
+          </div>
+          <div class="faq-list reveal">
+            <details>
+              <summary data-i18n="faq.q1">Is Bondie paid?</summary>
+              <p data-i18n="faq.a1">No. Bondie is completely free right now.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q2">Does it need the internet?</summary>
+              <p data-i18n="faq.a2">No. The games come inside the app, so it works without a connection.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q3">What ages is it for?</summary>
+              <p data-i18n="faq.a3">Ages 0 to 10. You enter your child's age once and fitting games come first.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q4">Do I need an account?</summary>
+              <p data-i18n="faq.a4">No. There is no account; your profile and favorites are stored only on your phone.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q5">Do the games need materials?</summary>
+              <p data-i18n="faq.a5">Most games use things you already have at home, or nothing at all. Each card lists what you need.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q6">Is it on Android?</summary>
+              <p data-i18n="faq.a6">Not yet. Bondie is on iPhone for now; the Android version is coming soon.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q7">Which languages can I use?</summary>
+              <p data-i18n="faq.a7">English, Turkish, and Spanish.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing" id="download">
+        <div class="container closing-inner reveal">
+          <h2 data-i18n="close.title">Draw a card tonight.</h2>
+          <p class="section-lede" data-i18n="close.text">The game ends; the bond stays.</p>
+          <div class="store-row">
+            <a
+              class="store-badge-link"
+              href="https://apps.apple.com/app/id6775076025"
+              target="_blank"
+              rel="noopener"
+              aria-label="Download Bondie on the App Store"
+              data-i18n-attr="aria-label:store.appLabel"
+            >
+              <img class="store-badge-image app-store-badge" src="assets/badges/app-store-en.svg" alt="" width="250" height="83" loading="lazy" />
+            </a>
+            <div class="store-badge-soon" role="img" aria-label="Google Play coming soon" data-i18n-attr="aria-label:store.playLabel">
+              <img class="store-badge-image google-play-badge" src="assets/badges/google-play-en.png" alt="" width="646" height="250" loading="lazy" />
+              <span class="store-badge-status" data-i18n="store.soon">Coming soon</span>
+            </div>
           </div>
         </div>
       </section>
@@ -420,11 +609,146 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <span>© 2026 Bondie</span>
+        <div class="footer-brand">
+          <a class="footer-brocan" href="https://brocan.co/" target="_blank" rel="noopener">
+            <img src="assets/images/brocan.webp" alt="Brocan" width="480" height="217" loading="lazy" />
+          </a>
+          <p data-i18n="footer.madeBy">Bondie is a Brocan app.</p>
+          <p class="footer-note">© 2026 Brocan LLC</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/brocanllc" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" /></svg>
+            </a>
+            <a href="https://www.tiktok.com/@brocanllc" target="_blank" rel="noopener" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" /></svg>
+            </a>
+            <a href="https://x.com/brocanllc" target="_blank" rel="noopener" aria-label="X">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h2 lang="en">Bondie</h2>
+          <nav class="footer-links" aria-label="Bondie">
+            <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+            <a href="#terms" data-i18n="nav.terms">Terms</a>
+            <a href="#trust" data-i18n="nav.safety">Safety</a>
+            <a href="#faq" data-i18n="nav.support">Support</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h2 data-i18n="footer.contact">Contact</h2>
+          <nav class="footer-links" aria-label="Contact" data-i18n-attr="aria-label:footer.contact">
+            <a href="mailto:hello@brocan.co">hello@brocan.co</a>
+            <a href="https://brocan.co/" target="_blank" rel="noopener">brocan.co</a>
+          </nav>
+        </div>
+        <div class="language-switcher" role="group" aria-label="Language" data-i18n-attr="aria-label:language.aria">
+          <button class="language-option is-active" type="button" data-lang="en" lang="en" aria-pressed="true" aria-label="English">EN</button>
+          <button class="language-option" type="button" data-lang="tr" lang="tr" aria-pressed="false" aria-label="Türkçe">TR</button>
+          <button class="language-option" type="button" data-lang="es" lang="es" aria-pressed="false" aria-label="Español">ES</button>
+        </div>
       </div>
     </footer>
 
+    <div class="sheet" id="sheet" hidden>
+      <div class="sheet-scrim"></div>
+      <aside class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="sheet-bar">
+          <h2 class="sheet-title" id="sheet-title"></h2>
+          <button class="sheet-close" type="button" aria-label="Close" data-i18n-attr="aria-label:sheet.close">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+        </div>
+        <div class="sheet-body" tabindex="-1">
+          <article class="sheet-doc" id="privacy" data-title-key="privacy.title" hidden>
+                <p class="updated" data-i18n="common.updated">Last updated: November 20, 2026</p>
+                <div class="legal-copy">
+              <h3 data-i18n="privacy.dataTitle">What data does Bondie store?</h3>
+              <p data-i18n="privacy.dataText">
+                Bondie stores parent name, child name, child age, avatars, activity preferences,
+                favorites, completed activities, and language preference in app storage on the
+                device. This information is entered by the parent in the app or created locally
+                while using the app. Bondie uses it to personalize the experience, show age- and
+                preference-aware activity suggestions, and remember favorites and completed activities.
+          </p>
+              <h3 data-i18n="privacy.storageTitle">Where is data kept?</h3>
+              <p data-i18n="privacy.storageText">
+                Bondie does not use an external database for this profile and activity data. This
+                data is not sent off the device; the Bondie team and third-party service providers
+                cannot access this local data.
+          </p>
+              <h3 data-i18n="privacy.thirdTitle">Third-party sharing</h3>
+              <p data-i18n="privacy.thirdText">
+                Bondie does not share in-app profile or activity data with third parties for
+                advertising, tracking, analytics, or marketing. The app does not use this data to
+                track users across different apps or websites.
+          </p>
+              <h3 data-i18n="privacy.supportTitle">Support and contact data</h3>
+              <p data-i18n="privacy.supportText">
+              When you email us for support, your email address and message reach us. This information is used only to answer your request, review privacy or safety reports, and follow up on bug feedback.
+                </p>
+              <h3 data-i18n="privacy.retentionTitle">Data retention and deletion</h3>
+              <p data-i18n-html="privacy.retentionText">
+              Local app data is kept on the device while the user continues using the app. When the app is deleted, this data may be removed by the operating system. Bondie does not keep a separate server-side account or backup for this data. Emails you send us are kept in our support mailbox so we can respond to your request. These records are used only for support, privacy, safety reports, or bug feedback follow-up. For privacy questions, deletion of support records, or help deleting local data, write to <a href="mailto:hello@brocan.co">hello@brocan.co</a>.
+                </p>
+              <h3 data-i18n="privacy.notCollectTitle">What does Bondie not collect?</h3>
+              <p data-i18n="privacy.notCollectText">
+                The current app experience does not ask for a child's email address, phone number,
+                precise location, photos, contacts, microphone, or camera. Bondie does not sell
+                personal information.
+          </p>
+        </div>
+          </article>
+          <article class="sheet-doc" id="terms" data-title-key="terms.title" hidden>
+                <p class="updated" data-i18n="common.updated">Last updated: November 20, 2026</p>
+                <div class="legal-copy">
+              <h3 data-i18n="terms.scopeTitle">Scope of these terms</h3>
+              <p data-i18n="terms.scopeText">
+                These terms apply when you use the Bondie app and the activity content provided by
+                Bondie. By using the app, you agree to these terms and the Privacy Policy.
+          </p>
+              <h3 data-i18n="terms.appleTitle">Apple standard EULA</h3>
+              <p data-i18n="terms.appleText">
+                When Bondie is downloaded through the App Store, Apple's standard end user license
+                agreement applies to the licensed use of the app. These terms do not replace Apple's
+                standard license agreement; they only provide additional notes about Bondie's use.
+          </p>
+              <h3 data-i18n="terms.useTitle">Use of the app</h3>
+              <p data-i18n="terms.useText">
+                Bondie offers screen-free activity ideas for families. The app is designed for
+                adults who choose, adapt, and supervise activities for children. Activities may not
+                be suitable for every child, family, environment, or condition; users should assess
+                suggestions based on their own situation.
+          </p>
+              <h3 data-i18n="terms.adviceTitle">Not professional advice</h3>
+              <p data-i18n="terms.adviceText">
+                Bondie is not medical, therapeutic, educational, or childcare professional advice.
+                For concerns about a child's health, development, behavior, or safety, consult a
+                qualified professional.
+          </p>
+              <h3 data-i18n="terms.parentTitle">Parent responsibility</h3>
+              <p data-i18n="terms.parentText">
+                Before starting an activity, the parent or caregiver is responsible for checking
+                materials, space, weather, allergies, choking risks, and supervision. If an activity
+                feels unsafe, stressful, or unsuitable, it should be stopped.
+          </p>
+              <h3 data-i18n="terms.contentTitle">Content changes</h3>
+              <p data-i18n="terms.contentText">
+                Bondie may update, change, or remove activity content, categories, and features from
+                time to time. The app is not guaranteed to be uninterrupted, error-free, or identical
+                on every device.
+          </p>
+              <h3 data-i18n="terms.contactTitle">Contact</h3>
+              <p data-i18n-html="terms.contactText">
+              For terms of use, app support, safety reports, or privacy requests, write to <a href="mailto:hello@brocan.co">hello@brocan.co</a>.
+                </p>
+        </div>
+          </article>
+        </div>
+      </aside>
+    </div>
+
     <script src="script.js"></script>
-    <script src="https://tally.so/widgets/embed.js" onload="window.BondieLoadTallyEmbeds?.()"></script>
   </body>
 </html>

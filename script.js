@@ -1,8 +1,5 @@
-const APP_STORE_URL = "";
 const DEFAULT_LANGUAGE = "en";
 const LANGUAGE_STORAGE_KEY = "bondie.site.language";
-const TALLY_MIN_HEIGHT = 720;
-const TALLY_INITIAL_HEIGHT = String(TALLY_MIN_HEIGHT);
 const SUPPORTED_LANGUAGES = ["en", "tr", "es"];
 const LANGUAGE_SLUGS = { en: "eng", tr: "tr", es: "esp" };
 const LANGUAGE_ALIASES = { en: "en", eng: "en", tr: "tr", es: "es", esp: "es" };
@@ -22,36 +19,6 @@ const storeBadges = {
   },
 };
 
-const cardImages = {
-  en: {
-    heroStory: "assets/images/hero-card-1-en.png",
-    heroBenefit: "assets/images/hero-card-2-en.png",
-    empathy: "assets/images/app-card-empathy-en.png",
-    club: "assets/images/app-card-club-symbol-en.png",
-    object: "assets/images/app-card-object-clue-en.png",
-  },
-  tr: {
-    heroStory: "assets/images/hero-card-1.png",
-    heroBenefit: "assets/images/hero-card-2.png",
-    empathy: "assets/images/app-card-empathy.png",
-    club: "assets/images/app-card-club-symbol.png",
-    object: "assets/images/app-card-object-clue.png",
-  },
-  es: {
-    heroStory: "assets/images/hero-card-1-es.png",
-    heroBenefit: "assets/images/hero-card-2-es.png",
-    empathy: "assets/images/app-card-empathy-es.png",
-    club: "assets/images/app-card-club-symbol-es.png",
-    object: "assets/images/app-card-object-clue-es.png",
-  },
-};
-
-const tallyForms = {
-  en: "https://tally.so/embed/Bz0QyR?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1",
-  tr: "https://tally.so/embed/44zoY5?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1",
-  es: "https://tally.so/embed/xXvPA5?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1",
-};
-
 const translations = {
   en: {
     metaTitle: "Bondie | Screen-free activity ideas",
@@ -60,43 +27,145 @@ const translations = {
     ogDescription: "Calm, short, safe play ideas based on your child's age, energy, and setting.",
     "nav.aria": "Main navigation",
     "brand.aria": "Bondie home",
+    "nav.how": "How it works",
+    "nav.faq": "FAQ",
+    "hero.title": "Tiny moments, big <span class=\"accent\">bonds</span>",
+    "hero.lede": "Short, screen-free games to play together with your child.",
+    "today.eyebrow": "Card of the day",
+    "today.title": "What shall we play today?",
+    "today.text": "Coming up with a new idea at the end of the day is hard. Bondie suggests one card every day, so your energy goes into playing, not deciding.",
+    "today.button": "Draw another card",
+    "act.bubble.title": "Bubble Chase",
+    "act.bubble.meta": "10 min · Ages 2–6 · Move",
+    "act.bubble.blurb": "Chase bubbles gently and pop them with hands or feet.",
+    "act.hunt.title": "Color Hunt",
+    "act.hunt.meta": "10 min · Ages 2–7 · Think",
+    "act.hunt.blurb": "Pick a color and find matching objects around you.",
+    "card.title": "What's inside a card?",
+    "card.lede": "Every game is a single card. Reading it takes less than a minute.",
+    "card.name": "Box Adventure",
+    "card.stepsTitle": "Steps",
+    "card.step1": "Choose what the box will become.",
+    "card.step2": "Decorate or arrange the box.",
+    "card.step3": "Act out an adventure inside or around it.",
+    "card.materials": "Materials: Cardboard box",
+    "card.whyTitle": "Why it helps",
+    "card.why1Label": "Imagination",
+    "card.why1Text": "Invites the child to turn ordinary things into stories, characters, or new possibilities.",
+    "card.why2Label": "Planning",
+    "card.why2Text": "Supports early sequencing by asking what comes next.",
+    "card.safetyTitle": "Safety note",
+    "card.s1Title": "Three short steps",
+    "card.s1Text": "How to play, what you need, how long it takes. Read it once, then put the phone away.",
+    "card.s2Title": "Why it helps",
+    "card.s2Text": "Each card tells you in a few sentences what the game gives your child.",
+    "card.s3Title": "Safety note",
+    "card.s3Text": "A short check of the space and materials before you start. Some games add warnings of their own.",
+    "foryou.title": "A deck shuffled for you",
+    "foryou.lede": "We ask only two things: their age and what they love. Bondie does the rest.",
+    "foryou.ageTitle": "How old is your child?",
+    "foryou.ageUnit": "years old",
+    "foryou.ageDown": "Decrease age",
+    "foryou.ageUp": "Increase age",
+    "foryou.likesTitle": "What do they love?",
+    "foryou.likesHint": "Pick as many as you like. Pick none and you get cards from all of them.",
+    "foryou.readyKicker": "Your deck is ready",
+    "explore.title": "Explore",
+    "explore.text": "The whole catalog, freshly shuffled every time. Filter by age, energy, and place.",
+    "explore.age": "Age",
+    "explore.energy": "Energy",
+    "explore.where": "Place",
+    "fav.title": "Favorites",
+    "fav.text": "Games you tap the heart on gather here: the small library you keep coming back to.",
+    "trust.title": "Play with peace of mind",
+    "trust.f1Title": "No account",
+    "trust.f1Text": "No sign-up, email, or password. Download and play.",
+    "trust.f2Title": "Your data stays on your device",
+    "trust.f2Text": "Your profile, favorites, and preferences are stored only on your phone.",
+    "trust.f3Title": "No ads, no tracking",
+    "trust.f3Text": "Nothing is shared with anyone for advertising, tracking, or analytics.",
+    "faq.title": "Questions, answered",
+    "faq.lede": "What people ask most before their first card.",
+    "faq.contactTitle": "Have another question?",
+    "faq.contactText": "Write to us about the app, privacy, safety, or a game.",
+    "faq.q1": "Is Bondie paid?",
+    "faq.a1": "No. Bondie is completely free right now.",
+    "faq.q2": "Does it need the internet?",
+    "faq.a2": "No. The games come inside the app, so it works without a connection.",
+    "faq.q3": "What ages is it for?",
+    "faq.a3": "Ages 0 to 10. You enter your child's age once and fitting games come first.",
+    "faq.q4": "Do I need an account?",
+    "faq.a4": "No. There is no account; your profile and favorites are stored only on your phone.",
+    "faq.q5": "Do the games need materials?",
+    "faq.a5": "Most games use things you already have at home, or nothing at all. Each card lists what you need.",
+    "faq.q6": "Is it on Android?",
+    "faq.a6": "Not yet. Bondie is on iPhone for now; the Android version is coming soon.",
+    "faq.q7": "Which languages can I use?",
+    "faq.a7": "English, Turkish, and Spanish.",
+    "close.title": "Draw a card tonight.",
+    "fact.time": "Time",
+    "fact.ages": "Ages",
+    "fact.place": "Place",
+    "card.blurb": "Turn a cardboard box into a rocket, boat, cave, car, or house.",
+    "card.time": "15 min",
+    "card.place": "Indoor",
+    "card.s0Title": "At a glance",
+    "card.s0Text": "Time, ages, and place sit right on the front. You know at once whether it fits.",
+    "foryou.ageBody": "We'll pick games that fit their age.",
+    "close.text": "The game ends; the bond stays.",
+    "ready.calm.title": "Garden Water Helper",
+    "ready.calm.blurb": "Help water one plant slowly and carefully.",
+    "ready.calm.time": "10 min",
+    "ready.calm.place": "Outdoor",
+    "ready.create.title": "Nature Paint Brushes",
+    "ready.create.blurb": "Use safe leaves, grass, or twigs as brushes to make textured art.",
+    "ready.create.time": "10 min",
+    "ready.create.place": "Outdoor",
+    "ready.feel.title": "Peekaboo Smiles",
+    "ready.feel.blurb": "Hide your face, then come back with a warm smile.",
+    "ready.feel.time": "3 min",
+    "ready.feel.place": "Anywhere",
+    "ready.move.title": "Gravity Shift",
+    "ready.move.blurb": "Pretend gravity has moved to a wall, corner, or chair and adjust your body to match.",
+    "ready.move.time": "10 min",
+    "ready.move.place": "Indoor",
+    "ready.talk.title": "Consonant-Only Talk",
+    "ready.talk.blurb": "Try speaking by dropping vowel sounds and letting the other person decode it.",
+    "ready.talk.time": "10 min",
+    "ready.talk.place": "Anywhere",
+    "ready.think.title": "Map the Room",
+    "ready.think.blurb": "Draw a simple map of the room and mark where things are.",
+    "ready.think.time": "15 min",
+    "ready.think.place": "Indoor",
+    "nav.categories": "Categories",
+    "act.ladder.title": "Bravery Ladder",
+    "act.ladder.meta": "10 min · Ages 4–10 · Feel",
+    "act.ladder.blurb": "Break a brave goal into tiny ladder steps that feel possible.",
+    "cat.title": "Six categories, one deck",
+    "cat.calm": "Calm",
+    "cat.calmHint": "Slow down, listen",
+    "cat.create": "Create",
+    "cat.createHint": "Draw, build, imagine",
+    "cat.feel": "Feel",
+    "cat.feelHint": "Feel it, say it",
+    "cat.move": "Move",
+    "cat.moveHint": "Jump, run, balance",
+    "cat.talk": "Talk",
+    "cat.talkHint": "Ask, tell, listen",
+    "cat.think": "Think",
+    "cat.thinkHint": "Find, count, solve",
+    "footer.madeBy": "Bondie is a Brocan app.",
+    "footer.contact": "Contact",
     "language.aria": "Language",
     "navToggle.aria": "Open menu",
-    "nav.app": "App",
     "nav.privacy": "Privacy",
     "nav.terms": "Terms",
     "nav.safety": "Safety",
     "nav.support": "Support",
-    "hero.eyebrow": "Tiny Moments, Big Bonds",
-    "hero.lede":
-      "Short, safe, connection-focused activity ideas based on your child's age, energy, and where you are.",
-    "hero.galleryAria": "Bondie app card examples",
-    "hero.cardOneAlt": "Story Chain activity card in the Bondie app",
-    "hero.cardTwoAlt": "Story Chain benefit card in the Bondie app",
-    "store.appTitle": "The App Store link will be enabled when published",
-    "store.appLabel": "App Store link will be enabled when published",
-    "store.appAlt": "Download on the App Store",
+    "store.appLabel": "Download Bondie on the App Store",
     "store.playLabel": "Google Play coming soon",
-    "store.playAlt": "Get it on Google Play",
     "store.soon": "Coming soon",
-    "app.eyebrow": "App",
-    "app.title": "Ideas that reduce screen time and make shared time easier.",
-    "app.lede":
-      "Bondie gives parents activity ideas that do not require long preparation. Every suggestion is short, adaptable, and simple enough to fit into daily life.",
-    "feature.oneTitle": "Suggestions that fit you",
-    "feature.oneText": "Bondie suggests activities based on age, energy level, category, and your setting.",
-    "feature.twoTitle": "Clear details on every card",
-    "feature.twoText": "How to play, what you need, how long it takes, and what to watch for: all in one card.",
-    "feature.threeTitle": "Discover, choose, save",
-    "feature.threeText": "Discover new activities, add favorites, and find them again easily.",
-    "feature.fourTitle": "Profile and language settings",
-    "feature.fourText": "Child profile, avatars, and language preference are stored on your device.",
-    "app.activityAria": "Bondie activity images",
-    "app.empathyAlt": "Empathy Glasses activity card in the Bondie app",
-    "app.clubAlt": "Secret Club Symbol activity card in the Bondie app",
-    "app.objectAlt": "Object Clue activity card in the Bondie app",
-    "common.updated": "Last updated: May 30, 2026",
-    "privacy.eyebrow": "Privacy",
+    "common.updated": "Last updated: November 20, 2026",
     "privacy.title": "Privacy Policy",
     "privacy.dataTitle": "What data does Bondie store?",
     "privacy.dataText":
@@ -107,19 +176,13 @@ const translations = {
     "privacy.thirdTitle": "Third-party sharing",
     "privacy.thirdText":
       "Bondie does not share in-app profile or activity data with third parties for advertising, tracking, analytics, or marketing. The app does not use this data to track users across different apps or websites.",
-    "privacy.supportTitle": "Support form and contact data",
-    "privacy.supportText":
-      "When you use the support form, your name, email address, selected topic, and message are sent to us. This information is used only to answer your support request, review privacy or safety reports, and follow up on bug feedback.",
-    "privacy.formTitle": "Form security and email delivery",
-    "privacy.formText":
-      "The support form is provided by Tally. Tally may process form submissions, apply security checks to reduce abuse, and forward your message to Bondie support. Tally may also provide privacy-friendly, anonymous form insights such as visits, source, device type, browser, and approximate location. Bondie does not use this information for advertising or tracking.",
+    "privacy.supportTitle": "Support and contact data",
+    "privacy.supportText": "When you email us for support, your email address and message reach us. This information is used only to answer your request, review privacy or safety reports, and follow up on bug feedback.",
     "privacy.retentionTitle": "Data retention and deletion",
-    "privacy.retentionText":
-      'Local app data is kept on the device while the user continues using the app. When the app is deleted, this data may be removed by the operating system. Bondie does not keep a separate server-side account or backup for this data. Your name, email address, selected topic, and message submitted through the support form may be processed by Tally and kept in the Bondie support mailbox so we can respond to your request. These records are used only for support, privacy, safety reports, or bug feedback follow-up. For privacy questions, deletion of support records, or help deleting local data, you can use the <a class="support-anchor" href="#support-form">support form</a>.',
+    "privacy.retentionText": "Local app data is kept on the device while the user continues using the app. When the app is deleted, this data may be removed by the operating system. Bondie does not keep a separate server-side account or backup for this data. Emails you send us are kept in our support mailbox so we can respond to your request. These records are used only for support, privacy, safety reports, or bug feedback follow-up. For privacy questions, deletion of support records, or help deleting local data, write to <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a>.",
     "privacy.notCollectTitle": "What does Bondie not collect?",
     "privacy.notCollectText":
       "The current app experience does not ask for a child's email address, phone number, precise location, photos, contacts, microphone, or camera. Bondie does not sell personal information.",
-    "terms.eyebrow": "Terms",
     "terms.title": "Terms of Use",
     "terms.scopeTitle": "Scope of these terms",
     "terms.scopeText":
@@ -140,10 +203,7 @@ const translations = {
     "terms.contentText":
       "Bondie may update, change, or remove activity content, categories, and features from time to time. The app is not guaranteed to be uninterrupted, error-free, or identical on every device.",
     "terms.contactTitle": "Contact",
-    "terms.contactText":
-      'For terms of use, app support, safety reports, or privacy requests, you can use the <a class="support-anchor" href="#support-form">support form</a>.',
-    "safety.eyebrow": "Safety",
-    "safety.title": "Safety Guide",
+    "terms.contactText": "For terms of use, app support, safety reports, or privacy requests, write to <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a>.",
     "safety.updated": "A short adult check before every activity.",
     "safety.oneTitle": "Adult supervision",
     "safety.oneText": "Every activity should be chosen, adapted, and supervised by a responsible adult.",
@@ -159,11 +219,7 @@ const translations = {
     "safety.sixTitle": "Health and emergencies",
     "safety.sixText":
       "If injury, allergic symptoms, or health risks appear, stop the activity and seek appropriate professional help.",
-    "support.eyebrow": "Support",
-    "support.title": "Need help?",
-    "support.lede":
-      'Write to us about the app, privacy, safety, activity feedback, or bug reports. For direct email: <a href="mailto:hello.bondie.app@gmail.com">hello.bondie.app@gmail.com</a>.',
-    "support.formTitle": "Bondie support form",
+    "sheet.close": "Close",
   },
   tr: {
     metaTitle: "Bondie | Ekransız aktivite fikirleri",
@@ -173,45 +229,145 @@ const translations = {
       "Çocuğun yaşına, enerjisine ve bulunduğunuz ortama göre sakin, kısa ve güvenli oyun fikirleri.",
     "nav.aria": "Ana navigasyon",
     "brand.aria": "Bondie ana sayfa",
+    "nav.how": "Nasıl çalışır",
+    "nav.faq": "SSS",
+    "hero.title": "Küçük anlar, büyük <span class=\"accent\">bağlar</span>",
+    "hero.lede": "Çocuğunla birlikte oynayacağın kısa, ekransız oyunlar.",
+    "today.eyebrow": "Günün kartı",
+    "today.title": "Bugün ne oynasak?",
+    "today.text": "Günün sonunda yeni bir fikir bulmak zor. Bondie her gün tek bir kart önerir; enerjin karar vermeye değil, oynamaya kalır.",
+    "today.button": "Başka bir kart çek",
+    "act.bubble.title": "Baloncuk Yakalama",
+    "act.bubble.meta": "10 dk · 2–6 yaş · Hareket",
+    "act.bubble.blurb": "Baloncukları nazikçe kovalayın, el ya da ayakla patlatın.",
+    "act.hunt.title": "Renk Avı",
+    "act.hunt.meta": "10 dk · 2–7 yaş · Düşünme",
+    "act.hunt.blurb": "Bir renk seçin ve etrafınızda o renge uyan nesneleri bulun.",
+    "card.title": "Kartın içinde ne var?",
+    "card.lede": "Her oyun tek bir kart. Okuması bir dakika sürmez.",
+    "card.name": "Kutu Macerası",
+    "card.stepsTitle": "Adımlar",
+    "card.step1": "Kutunun neye dönüşeceğini seçin.",
+    "card.step2": "Kutuyu süsleyin veya düzenleyin.",
+    "card.step3": "İçinde ya da etrafında bir macera canlandırın.",
+    "card.materials": "Malzemeler: Karton kutu",
+    "card.whyTitle": "Neden faydalı",
+    "card.why1Label": "Hayal Gücü",
+    "card.why1Text": "Çocuğu sıradan şeyleri hikayelere, karakterlere veya yeni olasılıklara dönüştürmeye davet eder.",
+    "card.why2Label": "Planlama",
+    "card.why2Text": "Sırada ne var diye düşündürerek erken sıralama becerisini destekler.",
+    "card.safetyTitle": "Güvenlik notu",
+    "card.s1Title": "Üç kısa adım",
+    "card.s1Text": "Nasıl oynanır, ne gerekir, ne kadar sürer. Bir kez oku, sonra telefonu kenara bırak.",
+    "card.s2Title": "Neden faydalı",
+    "card.s2Text": "Her kart, oyunun çocuğuna ne kattığını birkaç cümleyle söyler.",
+    "card.s3Title": "Güvenlik notu",
+    "card.s3Text": "Başlamadan önce alan ve malzeme için kısa bir kontrol. Bazı oyunlarda o oyuna özel uyarılar da çıkar.",
+    "foryou.title": "Deste sana göre karışır",
+    "foryou.lede": "Yalnızca iki şey soruyoruz: yaşı ve sevdikleri. Gerisini Bondie ayarlar.",
+    "foryou.ageTitle": "Çocuğun kaç yaşında?",
+    "foryou.ageUnit": "yaşında",
+    "foryou.ageDown": "Yaşı azalt",
+    "foryou.ageUp": "Yaşı artır",
+    "foryou.likesTitle": "Neleri sever?",
+    "foryou.likesHint": "İstediğin kadar seç. Hiçbirini seçmezsen hepsinden kart gelir.",
+    "foryou.readyKicker": "Desten hazır",
+    "explore.title": "Keşfet",
+    "explore.text": "Tüm katalog, her seferinde taze karışır. Yaşa, enerjiye ve yere göre süz.",
+    "explore.age": "Yaş",
+    "explore.energy": "Enerji",
+    "explore.where": "Yer",
+    "fav.title": "Favoriler",
+    "fav.text": "Kalbe dokunduğun oyunlar burada toplanır; sık döndüğün küçük kütüphanen.",
+    "trust.title": "İçin rahat olsun",
+    "trust.f1Title": "Hesap yok",
+    "trust.f1Text": "Kayıt, e-posta ya da şifre istemez. İndir ve oyna.",
+    "trust.f2Title": "Verilerin cihazında",
+    "trust.f2Text": "Profilin, favorilerin ve tercihlerin yalnızca telefonunda saklanır.",
+    "trust.f3Title": "Reklam ve izleme yok",
+    "trust.f3Text": "Hiçbir veri reklam, izleme ya da analiz için kimseyle paylaşılmaz.",
+    "faq.title": "Sık sorulanlar",
+    "faq.lede": "İlk karttan önce en çok merak edilenler.",
+    "faq.contactTitle": "Başka bir sorun mu var?",
+    "faq.contactText": "Uygulama, gizlilik, güvenlik ya da bir oyun hakkında bize yaz.",
+    "faq.q1": "Bondie ücretli mi?",
+    "faq.a1": "Hayır. Bondie şu an tamamen ücretsiz.",
+    "faq.q2": "İnternet gerekiyor mu?",
+    "faq.a2": "Hayır. Oyunlar uygulamanın içinde gelir; internet olmadan da çalışır.",
+    "faq.q3": "Hangi yaşlar için?",
+    "faq.a3": "0–10 yaş arası. Çocuğunun yaşını bir kez girersin, uygun oyunlar öne gelir.",
+    "faq.q4": "Hesap açmam gerekiyor mu?",
+    "faq.a4": "Hayır. Hesap yok; profilin ve favorilerin yalnızca telefonunda saklanır.",
+    "faq.q5": "Oyunlar için malzeme gerekir mi?",
+    "faq.a5": "Çoğu oyun evdeki eşyalarla ya da hiç malzemesiz oynanır. Gerekenler her kartta yazar.",
+    "faq.q6": "Android'de var mı?",
+    "faq.a6": "Henüz yok. Bondie şimdilik iPhone'da; Android sürümü yakında.",
+    "faq.q7": "Hangi dillerde kullanabilirim?",
+    "faq.a7": "Türkçe, İngilizce ve İspanyolca.",
+    "close.title": "Bu akşam bir kart çek.",
+    "fact.time": "Süre",
+    "fact.ages": "Yaş",
+    "fact.place": "Yer",
+    "card.blurb": "Bir karton kutuyu rokete, tekneye, mağaraya, arabaya ya da eve dönüştürün.",
+    "card.time": "15 dk",
+    "card.place": "İç mekan",
+    "card.s0Title": "Bir bakışta",
+    "card.s0Text": "Süre, yaş ve yer kartın ön yüzünde yazar. Size uygun mu, hemen anlarsın.",
+    "foryou.ageBody": "Oyunları yaşına göre seçeceğiz.",
+    "close.text": "Oyun biter, aranızdaki bağ kalır.",
+    "ready.calm.title": "Bahçe Sulama Yardımcısı",
+    "ready.calm.blurb": "Bir bitkiyi yavaş ve dikkatli sulamaya yardım et.",
+    "ready.calm.time": "10 dk",
+    "ready.calm.place": "Dış mekan",
+    "ready.create.title": "Doğadan Fırçalar",
+    "ready.create.blurb": "Güvenli yaprak, çimen ya da ince dalları fırça gibi kullanıp dokulu resimler yapın.",
+    "ready.create.time": "10 dk",
+    "ready.create.place": "Dış mekan",
+    "ready.feel.title": "Ce-ee Gülümsemeleri",
+    "ready.feel.blurb": "Yüzünüzü saklayın, sonra sıcak bir gülümsemeyle geri gelin.",
+    "ready.feel.time": "3 dk",
+    "ready.feel.place": "Her yer",
+    "ready.move.title": "Yer Çekimi Değişti",
+    "ready.move.blurb": "Yer çekimi duvara, köşeye ya da sandalyeye geçmiş gibi davranın ve bedeninizi buna göre ayarlayın.",
+    "ready.move.time": "10 dk",
+    "ready.move.place": "İç mekan",
+    "ready.talk.title": "Sadece Sessiz Harflerle Konuşma",
+    "ready.talk.blurb": "Sesli harfleri çıkararak konuşmayı deneyin, diğer kişi ne dediğinizi çözsün.",
+    "ready.talk.time": "10 dk",
+    "ready.talk.place": "Her yer",
+    "ready.think.title": "Odanın Haritası",
+    "ready.think.blurb": "Odanın basit bir haritasını çizin ve eşyaların yerini işaretleyin.",
+    "ready.think.time": "15 dk",
+    "ready.think.place": "İç mekan",
+    "nav.categories": "Kategoriler",
+    "act.ladder.title": "Cesaret Merdiveni",
+    "act.ladder.meta": "10 dk · 4–10 yaş · Duygu",
+    "act.ladder.blurb": "Cesur bir hedefi yapılabilir hissettiren küçük merdiven basamaklarına ayırın.",
+    "cat.title": "Altı kategori, bir deste",
+    "cat.calm": "Sakinlik",
+    "cat.calmHint": "Yavaşla, dinle",
+    "cat.create": "Üret",
+    "cat.createHint": "Çiz, kur, hayal et",
+    "cat.feel": "Duygu",
+    "cat.feelHint": "Hisset, anlat",
+    "cat.move": "Hareket",
+    "cat.moveHint": "Zıpla, koş, dengede dur",
+    "cat.talk": "Konuşma",
+    "cat.talkHint": "Sor, anlat, dinle",
+    "cat.think": "Düşünme",
+    "cat.thinkHint": "Bul, say, çöz",
+    "footer.madeBy": "Bondie bir Brocan uygulamasıdır.",
+    "footer.contact": "İletişim",
     "language.aria": "Dil",
     "navToggle.aria": "Menüyü aç",
-    "nav.app": "Uygulama",
     "nav.privacy": "Gizlilik",
     "nav.terms": "Koşullar",
     "nav.safety": "Güvenlik",
     "nav.support": "Destek",
-    "hero.eyebrow": "Küçük Anlar, Büyük Bağlar",
-    "hero.lede":
-      "Çocuğunuzun yaşına, enerjisine ve bulunduğunuz ortama göre kısa, güvenli ve bağ kurmaya odaklanan aktivite fikirleri.",
-    "hero.galleryAria": "Bondie uygulama kart örnekleri",
-    "hero.cardOneAlt": "Bondie uygulamasında Hikaye Zinciri aktivite kartı",
-    "hero.cardTwoAlt": "Bondie uygulamasında Hikaye Zinciri fayda kartı",
-    "store.appTitle": "App Store bağlantısı yayınlandığında aktif edilecek",
-    "store.appLabel": "App Store bağlantısı yayınlandığında aktif edilecek",
-    "store.appAlt": "App Store'dan indirin",
+    "store.appLabel": "Bondie'yi App Store'dan indir",
     "store.playLabel": "Google Play yakında",
-    "store.playAlt": "Google Play'den alın",
     "store.soon": "Yakında",
-    "app.eyebrow": "Uygulama",
-    "app.title": "Ekranı azaltan, birlikte geçirilen zamanı kolaylaştıran fikirler.",
-    "app.lede":
-      "Bondie uzun hazırlık gerektirmeyen aktiviteleri ebeveynin kontrolünde sunar. Her öneri kısa, uyarlanabilir ve günlük hayatın içine girecek kadar basittir.",
-    "feature.oneTitle": "Size uygun öneriler",
-    "feature.oneText":
-      "Bondie; yaş, enerji seviyesi, kategori ve bulunduğunuz ortama göre aktivite fikirleri sunar.",
-    "feature.twoTitle": "Her kartta net bilgi",
-    "feature.twoText":
-      "Nasıl oynanır, ne gerekir, ne kadar sürer ve nelere dikkat edilmeli: hepsi tek kartta.",
-    "feature.threeTitle": "Keşfet, seç, kaydet",
-    "feature.threeText": "Yeni aktiviteleri keşfedin, sevdiklerinizi favorilere ekleyin ve tekrar kolayca bulun.",
-    "feature.fourTitle": "Profil ve dil ayarları",
-    "feature.fourText": "Çocuk profili, avatarlar ve dil tercihi cihazınızda saklanır.",
-    "app.activityAria": "Bondie aktivite görselleri",
-    "app.empathyAlt": "Bondie uygulamasında Empati Gözlüğü aktivite kartı",
-    "app.clubAlt": "Bondie uygulamasında Gizli Kulüp Simgesi aktivite kartı",
-    "app.objectAlt": "Bondie uygulamasında Nesne İpucu aktivite kartı",
-    "common.updated": "Son güncelleme: 30 Mayıs 2026",
-    "privacy.eyebrow": "Gizlilik",
+    "common.updated": "Son güncelleme: 20 Kasım 2026",
     "privacy.title": "Gizlilik Politikası",
     "privacy.dataTitle": "Bondie hangi verileri saklar?",
     "privacy.dataText":
@@ -222,19 +378,13 @@ const translations = {
     "privacy.thirdTitle": "Üçüncü taraflarla paylaşım",
     "privacy.thirdText":
       "Bondie uygulama içindeki profil ve aktivite verilerini reklam, izleme, analiz veya pazarlama amacıyla üçüncü taraflarla paylaşmaz. Uygulama bu verileri kullanarak kullanıcıyı farklı uygulamalar veya web siteleri arasında takip etmez.",
-    "privacy.supportTitle": "Destek formu ve iletişim verileri",
-    "privacy.supportText":
-      "Destek formunu kullandığınızda adınız, e-posta adresiniz, seçtiğiniz konu ve mesajınız bize iletilir. Bu bilgiler yalnızca destek talebinizi yanıtlamak, gizlilik veya güvenlik bildirimlerini değerlendirmek ve hata geri bildirimlerini takip etmek için kullanılır.",
-    "privacy.formTitle": "Form güvenliği ve e-posta gönderimi",
-    "privacy.formText":
-      "Destek formu Tally tarafından sağlanır. Tally form gönderimini işleyebilir, kötüye kullanımı azaltmak için güvenlik kontrolleri uygulayabilir ve mesajınızı Bondie destek adresine iletebilir. Tally ayrıca ziyaret sayısı, kaynak, cihaz tipi, tarayıcı ve yaklaşık konum gibi gizlilik dostu anonim form istatistikleri sağlayabilir. Bondie bu bilgileri reklam veya izleme amacıyla kullanmaz.",
+    "privacy.supportTitle": "Destek ve iletişim verileri",
+    "privacy.supportText": "Destek için bize e-posta yazdığınızda e-posta adresiniz ve mesajınız bize ulaşır. Bu bilgiler yalnızca talebinizi yanıtlamak, gizlilik veya güvenlik bildirimlerini değerlendirmek ve hata geri bildirimlerini takip etmek için kullanılır.",
     "privacy.retentionTitle": "Veri saklama ve silme",
-    "privacy.retentionText":
-      'Lokal uygulama verileri, kullanıcı uygulamayı kullanmaya devam ettiği sürece cihazda saklanır. Uygulama silindiğinde bu veriler işletim sistemi tarafından kaldırılabilir. Bondie bu veriler için sunucu tarafında ayrı bir hesap veya yedek tutmaz. Destek formuyla gönderilen adınız, e-posta adresiniz, seçtiğiniz konu ve mesajınız Tally üzerinden işlenebilir ve destek talebinizi yanıtlayabilmemiz için Bondie destek e-posta kutusunda tutulabilir. Bu kayıtlar yalnızca destek, gizlilik, güvenlik bildirimi veya hata geri bildirimi takibi için kullanılır. Gizlilik soruları, destek kayıtlarının silinmesi veya lokal verileri silme konusunda yardım için <a class="support-anchor" href="#support-form">destek formunu</a> kullanabilirsiniz.',
+    "privacy.retentionText": "Lokal uygulama verileri, kullanıcı uygulamayı kullanmaya devam ettiği sürece cihazda saklanır. Uygulama silindiğinde bu veriler işletim sistemi tarafından kaldırılabilir. Bondie bu veriler için sunucu tarafında ayrı bir hesap veya yedek tutmaz. Bize gönderdiğiniz e-postalar, talebinizi yanıtlayabilmemiz için destek e-posta kutumuzda tutulur. Bu kayıtlar yalnızca destek, gizlilik, güvenlik bildirimi veya hata geri bildirimi takibi için kullanılır. Gizlilik soruları, destek kayıtlarının silinmesi veya lokal verileri silme konusunda yardım için <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a> adresine yazabilirsiniz.",
     "privacy.notCollectTitle": "Bondie neleri toplamaz?",
     "privacy.notCollectText":
       "Mevcut uygulama deneyimi çocuğun e-posta adresini, telefon numarasını, hassas konumunu, fotoğraflarını, kişilerini, mikrofonunu veya kamerasını istemez. Bondie kişisel bilgileri satmaz.",
-    "terms.eyebrow": "Koşullar",
     "terms.title": "Kullanım Koşulları",
     "terms.scopeTitle": "Koşulların kapsamı",
     "terms.scopeText":
@@ -255,10 +405,7 @@ const translations = {
     "terms.contentText":
       "Bondie aktivite içeriklerini, kategori ve özelliklerini zaman zaman güncelleyebilir, değiştirebilir veya kaldırabilir. Uygulamanın kesintisiz, hatasız ya da her cihazda aynı şekilde çalışacağı garanti edilmez.",
     "terms.contactTitle": "İletişim",
-    "terms.contactText":
-      'Kullanım koşulları, uygulama desteği, güvenlik bildirimi veya gizlilik talepleri için <a class="support-anchor" href="#support-form">destek formunu</a> kullanabilirsiniz.',
-    "safety.eyebrow": "Güvenlik",
-    "safety.title": "Güvenlik Rehberi",
+    "terms.contactText": "Kullanım koşulları, uygulama desteği, güvenlik bildirimi veya gizlilik talepleri için <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a> adresine yazabilirsiniz.",
     "safety.updated": "Her aktiviteden önce kısa bir yetişkin kontrolü.",
     "safety.oneTitle": "Yetişkin gözetimi",
     "safety.oneText": "Her aktivite sorumlu bir yetişkin tarafından seçilmeli, uyarlanmalı ve gözetilmelidir.",
@@ -275,11 +422,7 @@ const translations = {
     "safety.sixTitle": "Sağlık ve acil durum",
     "safety.sixText":
       "Yaralanma, alerjik belirti veya sağlık riski oluşursa aktiviteyi bırakın ve uygun profesyonel yardım alın.",
-    "support.eyebrow": "Destek",
-    "support.title": "Yardıma mı ihtiyacınız var?",
-    "support.lede":
-      'Uygulama, gizlilik, güvenlik, aktivite geri bildirimi veya hata bildirimi için bize yazın. Doğrudan e-posta için <a href="mailto:hello.bondie.app@gmail.com">hello.bondie.app@gmail.com</a>.',
-    "support.formTitle": "Bondie destek formu",
+    "sheet.close": "Kapat",
   },
   es: {
     metaTitle: "Bondie | Ideas de actividades sin pantallas",
@@ -289,45 +432,145 @@ const translations = {
       "Ideas de juego tranquilas, breves y seguras según la edad, energía y entorno de tu peque.",
     "nav.aria": "Navegación principal",
     "brand.aria": "Inicio de Bondie",
+    "nav.how": "Cómo funciona",
+    "nav.faq": "Preguntas",
+    "hero.title": "Pequeños momentos, grandes <span class=\"accent\">lazos</span>",
+    "hero.lede": "Juegos cortos y sin pantallas para jugar con tu pequeño.",
+    "today.eyebrow": "Tarjeta del día",
+    "today.title": "¿A qué jugamos hoy?",
+    "today.text": "Al final del día cuesta encontrar una idea nueva. Bondie te propone una sola carta cada día, para que tu energía vaya a jugar y no a decidir.",
+    "today.button": "Sacar otra carta",
+    "act.bubble.title": "Persigue Burbujas",
+    "act.bubble.meta": "10 min · Edades 2–6 · Movimiento",
+    "act.bubble.blurb": "Persigan burbujas suavemente y revientenlas con manos o pies.",
+    "act.hunt.title": "Búsqueda de Colores",
+    "act.hunt.meta": "10 min · Edades 2–7 · Pensar",
+    "act.hunt.blurb": "Elijan un color y busquen objetos que coincidan a su alrededor.",
+    "card.title": "¿Qué hay en una carta?",
+    "card.lede": "Cada juego es una sola carta. Leerla lleva menos de un minuto.",
+    "card.name": "Aventura con una caja",
+    "card.stepsTitle": "Pasos",
+    "card.step1": "Elijan en qué se convertirá la caja.",
+    "card.step2": "Decoren o acomoden la caja.",
+    "card.step3": "Representen una aventura dentro o alrededor de ella.",
+    "card.materials": "Materiales: Caja de cartón",
+    "card.whyTitle": "Por qué ayuda",
+    "card.why1Label": "Imaginación",
+    "card.why1Text": "Invita al niño a convertir cosas comunes en historias, personajes o nuevas posibilidades.",
+    "card.why2Label": "Planificación",
+    "card.why2Text": "Apoya la secuenciación temprana al preguntar qué viene después.",
+    "card.safetyTitle": "Nota de seguridad",
+    "card.s1Title": "Tres pasos cortos",
+    "card.s1Text": "Cómo se juega, qué necesitas y cuánto dura. Léela una vez y deja el teléfono a un lado.",
+    "card.s2Title": "Por qué ayuda",
+    "card.s2Text": "Cada carta cuenta en pocas frases qué le aporta el juego a tu pequeño.",
+    "card.s3Title": "Nota de seguridad",
+    "card.s3Text": "Una revisión breve del espacio y los materiales antes de empezar. Algunos juegos añaden avisos propios.",
+    "foryou.title": "Una baraja hecha para ti",
+    "foryou.lede": "Solo preguntamos dos cosas: su edad y lo que le gusta. Bondie hace el resto.",
+    "foryou.ageTitle": "¿Qué edad tiene tu pequeño?",
+    "foryou.ageUnit": "años",
+    "foryou.ageDown": "Bajar la edad",
+    "foryou.ageUp": "Subir la edad",
+    "foryou.likesTitle": "¿Qué le gusta?",
+    "foryou.likesHint": "Elige las que quieras. Si no eliges ninguna, llegan cartas de todas.",
+    "foryou.readyKicker": "Tu baraja está lista",
+    "explore.title": "Explorar",
+    "explore.text": "Todo el catálogo, barajado de nuevo cada vez. Filtra por edad, energía y lugar.",
+    "explore.age": "Edad",
+    "explore.energy": "Energía",
+    "explore.where": "Lugar",
+    "fav.title": "Favoritos",
+    "fav.text": "Los juegos a los que les das corazón se reúnen aquí: la pequeña biblioteca a la que siempre vuelves.",
+    "trust.title": "Juega con tranquilidad",
+    "trust.f1Title": "Sin cuenta",
+    "trust.f1Text": "Sin registro, correo ni contraseña. Descarga y juega.",
+    "trust.f2Title": "Tus datos se quedan en tu dispositivo",
+    "trust.f2Text": "Tu perfil, tus favoritos y tus preferencias se guardan solo en tu teléfono.",
+    "trust.f3Title": "Sin anuncios ni seguimiento",
+    "trust.f3Text": "No se comparte nada con nadie para publicidad, seguimiento o analítica.",
+    "faq.title": "Preguntas frecuentes",
+    "faq.lede": "Lo que más se pregunta antes de la primera carta.",
+    "faq.contactTitle": "¿Tienes otra pregunta?",
+    "faq.contactText": "Escríbenos sobre la app, la privacidad, la seguridad o un juego.",
+    "faq.q1": "¿Bondie es de pago?",
+    "faq.a1": "No. Por ahora Bondie es totalmente gratis.",
+    "faq.q2": "¿Necesita internet?",
+    "faq.a2": "No. Los juegos vienen dentro de la app, así que funciona sin conexión.",
+    "faq.q3": "¿Para qué edades es?",
+    "faq.a3": "De 0 a 10 años. Indicas la edad de tu pequeño una vez y primero aparecen los juegos que encajan.",
+    "faq.q4": "¿Necesito una cuenta?",
+    "faq.a4": "No. No hay cuenta; tu perfil y tus favoritos se guardan solo en tu teléfono.",
+    "faq.q5": "¿Los juegos necesitan materiales?",
+    "faq.a5": "La mayoría usa cosas que ya tienes en casa, o nada. Cada carta indica qué hace falta.",
+    "faq.q6": "¿Está en Android?",
+    "faq.a6": "Todavía no. Por ahora Bondie está en iPhone; la versión para Android llegará pronto.",
+    "faq.q7": "¿En qué idiomas puedo usarla?",
+    "faq.a7": "Español, inglés y turco.",
+    "close.title": "Saca una carta esta noche.",
+    "fact.time": "Tiempo",
+    "fact.ages": "Edades",
+    "fact.place": "Lugar",
+    "card.blurb": "Conviertan una caja en cohete, barco, cueva, auto o casa.",
+    "card.time": "15 min",
+    "card.place": "Interior",
+    "card.s0Title": "De un vistazo",
+    "card.s0Text": "Tiempo, edades y lugar están en el frente. Sabes al instante si encaja.",
+    "foryou.ageBody": "Elegiremos juegos para su edad.",
+    "close.text": "El juego termina; el lazo queda.",
+    "ready.calm.title": "Ayudante de riego",
+    "ready.calm.blurb": "Ayuda a regar una planta despacio y con cuidado.",
+    "ready.calm.time": "10 min",
+    "ready.calm.place": "Exterior",
+    "ready.create.title": "Pinceles de la naturaleza",
+    "ready.create.blurb": "Usen hojas, pasto o ramitas seguras como pinceles para crear arte con textura.",
+    "ready.create.time": "10 min",
+    "ready.create.place": "Exterior",
+    "ready.feel.title": "Sonrisas De Cucú",
+    "ready.feel.blurb": "Esconde tu cara y vuelve con una sonrisa cálida.",
+    "ready.feel.time": "3 min",
+    "ready.feel.place": "Donde sea",
+    "ready.move.title": "Cambio de Gravedad",
+    "ready.move.blurb": "Imaginen que la gravedad se movió a una pared, una esquina o una silla, y ajusten el cuerpo.",
+    "ready.move.time": "10 min",
+    "ready.move.place": "Interior",
+    "ready.talk.title": "Hablar Solo con Consonantes",
+    "ready.talk.blurb": "Intenten hablar quitando las vocales y dejen que la otra persona lo descifre.",
+    "ready.talk.time": "10 min",
+    "ready.talk.place": "Donde sea",
+    "ready.think.title": "Mapa de la habitación",
+    "ready.think.blurb": "Dibujen un mapa sencillo de la habitación y marquen dónde están las cosas.",
+    "ready.think.time": "15 min",
+    "ready.think.place": "Interior",
+    "nav.categories": "Categorías",
+    "act.ladder.title": "Escalera de Valentía",
+    "act.ladder.meta": "10 min · Edades 4–10 · Emociones",
+    "act.ladder.blurb": "Dividan una meta valiente en pasitos pequeños que se sientan posibles.",
+    "cat.title": "Seis categorías, una baraja",
+    "cat.calm": "Calma",
+    "cat.calmHint": "Frena y escucha",
+    "cat.create": "Crear",
+    "cat.createHint": "Dibuja, construye, imagina",
+    "cat.feel": "Emociones",
+    "cat.feelHint": "Siente y cuéntalo",
+    "cat.move": "Movimiento",
+    "cat.moveHint": "Salta, corre, equilibra",
+    "cat.talk": "Hablar",
+    "cat.talkHint": "Pregunta, cuenta, escucha",
+    "cat.think": "Pensar",
+    "cat.thinkHint": "Busca, cuenta, resuelve",
+    "footer.madeBy": "Bondie es una app de Brocan.",
+    "footer.contact": "Contacto",
     "language.aria": "Idioma",
     "navToggle.aria": "Abrir menú",
-    "nav.app": "App",
     "nav.privacy": "Privacidad",
     "nav.terms": "Términos",
     "nav.safety": "Seguridad",
     "nav.support": "Soporte",
-    "hero.eyebrow": "Momentos pequeños, vínculos grandes",
-    "hero.lede":
-      "Ideas de actividades breves, seguras y centradas en conectar, según la edad, energía y lugar donde estén.",
-    "hero.galleryAria": "Ejemplos de tarjetas de la app Bondie",
-    "hero.cardOneAlt": "Tarjeta de actividad Cadena de historias en la app Bondie",
-    "hero.cardTwoAlt": "Tarjeta de beneficios de Cadena de historias en la app Bondie",
-    "store.appTitle": "El enlace de App Store se activará cuando esté publicado",
-    "store.appLabel": "El enlace de App Store se activará cuando esté publicado",
-    "store.appAlt": "Descárgalo en el App Store",
+    "store.appLabel": "Descarga Bondie en el App Store",
     "store.playLabel": "Google Play próximamente",
-    "store.playAlt": "Disponible en Google Play",
     "store.soon": "Próximamente",
-    "app.eyebrow": "App",
-    "app.title": "Ideas que reducen pantallas y facilitan el tiempo compartido.",
-    "app.lede":
-      "Bondie ofrece a las familias ideas de actividades que no requieren mucha preparación. Cada sugerencia es breve, adaptable y lo bastante simple para entrar en la vida diaria.",
-    "feature.oneTitle": "Sugerencias a tu medida",
-    "feature.oneText":
-      "Bondie sugiere actividades según la edad, nivel de energía, categoría y entorno.",
-    "feature.twoTitle": "Información clara en cada tarjeta",
-    "feature.twoText":
-      "Cómo jugar, qué necesitas, cuánto dura y qué tener en cuenta: todo en una tarjeta.",
-    "feature.threeTitle": "Descubre, elige, guarda",
-    "feature.threeText": "Descubre nuevas actividades, marca favoritas y vuelve a encontrarlas fácilmente.",
-    "feature.fourTitle": "Perfil e idioma",
-    "feature.fourText": "El perfil infantil, los avatares y el idioma se guardan en tu dispositivo.",
-    "app.activityAria": "Imágenes de actividades de Bondie",
-    "app.empathyAlt": "Tarjeta de actividad Gafas de empatía en la app Bondie",
-    "app.clubAlt": "Tarjeta de actividad Símbolo del club secreto en la app Bondie",
-    "app.objectAlt": "Tarjeta de actividad Pista de objeto en la app Bondie",
-    "common.updated": "Última actualización: 30 de mayo de 2026",
-    "privacy.eyebrow": "Privacidad",
+    "common.updated": "Última actualización: 20 de noviembre de 2026",
     "privacy.title": "Política de privacidad",
     "privacy.dataTitle": "¿Qué datos guarda Bondie?",
     "privacy.dataText":
@@ -338,19 +581,13 @@ const translations = {
     "privacy.thirdTitle": "Compartir con terceros",
     "privacy.thirdText":
       "Bondie no comparte datos de perfil o actividad de la app con terceros para publicidad, seguimiento, analítica o marketing. La app no usa estos datos para seguir a usuarios entre distintas apps o sitios web.",
-    "privacy.supportTitle": "Formulario de soporte y datos de contacto",
-    "privacy.supportText":
-      "Cuando usas el formulario de soporte, tu nombre, correo electrónico, tema seleccionado y mensaje se nos envían. Esta información se usa solo para responder tu solicitud, revisar informes de privacidad o seguridad y dar seguimiento a comentarios sobre errores.",
-    "privacy.formTitle": "Seguridad del formulario y envío por correo",
-    "privacy.formText":
-      "El formulario de soporte lo proporciona Tally. Tally puede procesar los envíos, aplicar controles de seguridad para reducir abusos y reenviar tu mensaje al soporte de Bondie. Tally también puede proporcionar estadísticas anónimas y respetuosas con la privacidad, como visitas, fuente, tipo de dispositivo, navegador y ubicación aproximada. Bondie no usa esta información para publicidad ni seguimiento.",
+    "privacy.supportTitle": "Soporte y datos de contacto",
+    "privacy.supportText": "Cuando nos escribes por correo para pedir soporte, recibimos tu dirección de correo y tu mensaje. Esta información se usa solo para responder tu solicitud, revisar informes de privacidad o seguridad y dar seguimiento a comentarios sobre errores.",
     "privacy.retentionTitle": "Conservación y eliminación de datos",
-    "privacy.retentionText":
-      'Los datos locales de la app se conservan en el dispositivo mientras el usuario siga usando la app. Al eliminar la app, el sistema operativo puede eliminar estos datos. Bondie no mantiene una cuenta ni copia de seguridad separada en servidor para estos datos. Tu nombre, correo, tema seleccionado y mensaje enviados por el formulario de soporte pueden ser procesados por Tally y guardados en el buzón de soporte de Bondie para responder tu solicitud. Estos registros se usan solo para soporte, privacidad, informes de seguridad o seguimiento de errores. Para preguntas de privacidad, eliminar registros de soporte o recibir ayuda para borrar datos locales, puedes usar el <a class="support-anchor" href="#support-form">formulario de soporte</a>.',
+    "privacy.retentionText": "Los datos locales de la app se conservan en el dispositivo mientras el usuario siga usando la app. Al eliminar la app, el sistema operativo puede eliminar estos datos. Bondie no mantiene una cuenta ni copia de seguridad separada en servidor para estos datos. Los correos que nos envías se guardan en nuestro buzón de soporte para responder tu solicitud. Estos registros se usan solo para soporte, privacidad, informes de seguridad o seguimiento de errores. Para preguntas de privacidad, eliminar registros de soporte o recibir ayuda para borrar datos locales, escribe a <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a>.",
     "privacy.notCollectTitle": "¿Qué no recopila Bondie?",
     "privacy.notCollectText":
       "La experiencia actual de la app no solicita correo electrónico, teléfono, ubicación precisa, fotos, contactos, micrófono ni cámara del niño. Bondie no vende información personal.",
-    "terms.eyebrow": "Términos",
     "terms.title": "Términos de uso",
     "terms.scopeTitle": "Alcance de estos términos",
     "terms.scopeText":
@@ -371,10 +608,7 @@ const translations = {
     "terms.contentText":
       "Bondie puede actualizar, cambiar o retirar contenidos, categorías y funciones de actividades ocasionalmente. No se garantiza que la app sea ininterrumpida, libre de errores o idéntica en todos los dispositivos.",
     "terms.contactTitle": "Contacto",
-    "terms.contactText":
-      'Para términos de uso, soporte de la app, informes de seguridad o solicitudes de privacidad, puedes usar el <a class="support-anchor" href="#support-form">formulario de soporte</a>.',
-    "safety.eyebrow": "Seguridad",
-    "safety.title": "Guía de seguridad",
+    "terms.contactText": "Para términos de uso, soporte de la app, informes de seguridad o solicitudes de privacidad, escribe a <a href=\"mailto:hello@brocan.co\">hello@brocan.co</a>.",
     "safety.updated": "Una breve revisión adulta antes de cada actividad.",
     "safety.oneTitle": "Supervisión adulta",
     "safety.oneText": "Cada actividad debe ser elegida, adaptada y supervisada por un adulto responsable.",
@@ -392,22 +626,16 @@ const translations = {
     "safety.sixTitle": "Salud y emergencias",
     "safety.sixText":
       "Si aparece una lesión, síntoma alérgico o riesgo de salud, detén la actividad y busca ayuda profesional adecuada.",
-    "support.eyebrow": "Soporte",
-    "support.title": "¿Necesitas ayuda?",
-    "support.lede":
-      'Escríbenos sobre la app, privacidad, seguridad, comentarios de actividades o errores. Para correo directo: <a href="mailto:hello.bondie.app@gmail.com">hello.bondie.app@gmail.com</a>.',
-    "support.formTitle": "Formulario de soporte de Bondie",
+    "sheet.close": "Cerrar",
   },
 };
 
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector("#nav-links");
 const sectionLinks = document.querySelectorAll(".nav-link");
-const appStoreLink = document.querySelector("#app-store-link");
-const appStoreBadge = document.querySelector("#app-store-badge");
-const googlePlayBadge = document.querySelector("#google-play-badge");
+const appStoreBadges = document.querySelectorAll(".app-store-badge");
+const googlePlayBadges = document.querySelectorAll(".google-play-badge");
 const languageOptions = document.querySelectorAll(".language-option");
-let supportFormFrame = document.querySelector("#support-form iframe");
 
 const getDictionary = (language) => translations[language] ?? translations[DEFAULT_LANGUAGE];
 
@@ -424,13 +652,20 @@ const getQueryLanguage = () => {
 const getStoredLanguage = () => {
   try {
     const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    return SUPPORTED_LANGUAGES.includes(storedLanguage) ? storedLanguage : DEFAULT_LANGUAGE;
+    return SUPPORTED_LANGUAGES.includes(storedLanguage) ? storedLanguage : "";
   } catch {
-    return DEFAULT_LANGUAGE;
+    return "";
   }
 };
 
-const getInitialLanguage = () => getPathLanguage() || getQueryLanguage() || getStoredLanguage();
+// The visitor's own choice wins; on a first visit the browser's language decides.
+const getBrowserLanguage = () =>
+  (navigator.languages ?? [navigator.language])
+    .map((language) => LANGUAGE_ALIASES[String(language).slice(0, 2).toLowerCase()])
+    .find(Boolean) ?? "";
+
+const getInitialLanguage = () =>
+  getPathLanguage() || getQueryLanguage() || getStoredLanguage() || getBrowserLanguage() || DEFAULT_LANGUAGE;
 
 const getLocalizedPath = (language) => {
   const slug = LANGUAGE_SLUGS[language] ?? LANGUAGE_SLUGS[DEFAULT_LANGUAGE];
@@ -460,37 +695,6 @@ const setMetaContent = (selector, value) => {
   document.querySelector(selector)?.setAttribute("content", value);
 };
 
-const loadTallyEmbeds = () => {
-  window.Tally?.loadEmbeds?.();
-};
-
-window.BondieLoadTallyEmbeds = loadTallyEmbeds;
-
-const stabilizeTallyFrameHeight = (frame) => {
-  if (!frame) return;
-
-  const currentHeight = Number.parseInt(frame.style.height || frame.getAttribute("height") || "0", 10);
-  if (!currentHeight || currentHeight < TALLY_MIN_HEIGHT) {
-    frame.style.height = `${TALLY_MIN_HEIGHT}px`;
-  }
-
-  frame.setAttribute("height", String(Math.max(currentHeight || 0, TALLY_MIN_HEIGHT)));
-};
-
-const updateSupportForm = (language) => {
-  if (!supportFormFrame) return;
-
-  const formUrl = tallyForms[language] ?? tallyForms[DEFAULT_LANGUAGE];
-  if (supportFormFrame.dataset.tallySrc !== formUrl || supportFormFrame.getAttribute("src") !== formUrl) {
-    supportFormFrame.dataset.tallySrc = formUrl;
-    supportFormFrame.src = formUrl;
-    supportFormFrame.removeAttribute("style");
-  }
-
-  supportFormFrame.setAttribute("height", TALLY_INITIAL_HEIGHT);
-  stabilizeTallyFrameHeight(supportFormFrame);
-};
-
 const applyLanguage = (language, { updateUrl = false, replaceUrl = false } = {}) => {
   const dictionary = getDictionary(language);
   const activeLanguage = translations[language] ? language : DEFAULT_LANGUAGE;
@@ -501,22 +705,13 @@ const applyLanguage = (language, { updateUrl = false, replaceUrl = false } = {})
   setMetaContent('meta[property="og:title"]', dictionary.metaTitle);
   setMetaContent('meta[property="og:description"]', dictionary.ogDescription);
 
-  if (appStoreBadge) {
-    appStoreBadge.src = storeBadges[activeLanguage].appStore;
-    appStoreBadge.alt = dictionary["store.appAlt"];
-  }
-
-  if (googlePlayBadge) {
-    googlePlayBadge.src = storeBadges[activeLanguage].googlePlay;
-    googlePlayBadge.alt = dictionary["store.playAlt"];
-  }
-
-  document.querySelectorAll("[data-card-image]").forEach((image) => {
-    const src = cardImages[activeLanguage]?.[image.dataset.cardImage];
-    if (src) image.src = src;
+  appStoreBadges.forEach((badge) => {
+    badge.src = storeBadges[activeLanguage].appStore;
   });
 
-  updateSupportForm(activeLanguage);
+  googlePlayBadges.forEach((badge) => {
+    badge.src = storeBadges[activeLanguage].googlePlay;
+  });
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const value = dictionary[element.dataset.i18n];
@@ -551,13 +746,8 @@ const applyLanguage = (language, { updateUrl = false, replaceUrl = false } = {})
   if (updateUrl) updateLanguageUrl(activeLanguage, { replace: replaceUrl });
 
   document.documentElement.classList.remove("i18n-pending");
+  updateSheetTitle();
 };
-
-if (APP_STORE_URL && appStoreLink) {
-  appStoreLink.href = APP_STORE_URL;
-  appStoreLink.classList.remove("app-store-link-disabled");
-  appStoreLink.removeAttribute("aria-disabled");
-}
 
 navToggle?.addEventListener("click", () => {
   const isOpen = navLinks?.classList.toggle("is-open") ?? false;
@@ -583,22 +773,269 @@ const observedSections = [...sectionLinks]
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      sectionLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
-      });
-    });
+// The active link is the last section whose top has passed the upper part of the viewport.
+// Privacy and Terms sit side by side on wide screens; the first of a row wins.
+const updateActiveLink = () => {
+  const line = window.innerHeight * 0.4;
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+  let active = null;
+  let activeTop = -Infinity;
+
+  observedSections.forEach((section) => {
+    const top = section.getBoundingClientRect().top;
+    if (top <= line && top > activeTop + 1) {
+      active = section;
+      activeTop = top;
+    }
+  });
+
+  if (atBottom) active = observedSections.at(-1) ?? active;
+
+  sectionLinks.forEach((link) => {
+    link.classList.toggle("is-active", Boolean(active) && link.getAttribute("href") === `#${active.id}`);
+  });
+};
+
+window.addEventListener("scroll", updateActiveLink, { passive: true });
+window.addEventListener("resize", updateActiveLink);
+updateActiveLink();
+
+
+// Privacy and Terms open in a panel docked to the right edge (a bottom sheet on phones).
+// #privacy and #terms are real URLs: the App Store listing links to them.
+const sheet = document.querySelector("#sheet");
+const sheetPanel = sheet?.querySelector(".sheet-panel");
+const sheetBody = sheet?.querySelector(".sheet-body");
+const sheetTitle = sheet?.querySelector(".sheet-title");
+const sheetDocs = [...(sheet?.querySelectorAll(".sheet-doc") ?? [])];
+let sheetReturnFocus = null;
+let sheetScrollY = 0;
+
+const getSheetDoc = (hash) => sheetDocs.find((doc) => `#${doc.id}` === hash) ?? null;
+
+const updateSheetTitle = () => {
+  const doc = sheetDocs.find((item) => !item.hidden);
+  if (!doc || !sheetTitle) return;
+  sheetTitle.textContent = getDictionary(document.documentElement.lang)[doc.dataset.titleKey] ?? "";
+};
+
+const openSheet = (doc) => {
+  if (!sheet || !doc) return;
+  sheetDocs.forEach((item) => {
+    item.hidden = item !== doc;
+  });
+  updateSheetTitle();
+  sheetBody.scrollTop = 0;
+  if (!sheet.hidden) return;
+
+  sheetReturnFocus = document.activeElement;
+  sheetScrollY = window.scrollY;
+  window.history.scrollRestoration = "manual";
+  sheet.hidden = false;
+  sheet.classList.remove("is-out");
+  sheet.classList.add("is-in");
+  document.documentElement.classList.add("sheet-open");
+  sheet.querySelector(".sheet-close")?.focus({ preventScroll: true });
+};
+
+const closeSheet = () => {
+  if (!sheet || sheet.hidden || sheet.classList.contains("is-out")) return;
+
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    sheet.hidden = true;
+    sheet.classList.remove("is-out");
+    document.documentElement.classList.remove("sheet-open");
+    sheetReturnFocus?.focus?.({ preventScroll: true });
+  };
+
+  // Going back to the previous URL must not move the page behind the panel.
+  window.scrollTo({ top: sheetScrollY, behavior: "instant" });
+
+  sheet.classList.replace("is-in", "is-out");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) finish();
+  else {
+    sheetPanel.addEventListener("animationend", finish, { once: true });
+    // The animation does not run in a background tab; never leave the panel stuck open.
+    window.setTimeout(finish, 400);
+  }
+};
+
+// Closing goes back when the panel was opened from a link on this page, so Back also closes it.
+// If the URL underneath carries a section hash (#categories), going back would make the browser
+// scroll to that section again; then the panel's own entry is rewritten instead.
+const dismissSheet = () => {
+  if (window.history.state?.sheet && !window.history.state.overHash) {
+    window.history.back();
+    return;
+  }
+
+  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  closeSheet();
+};
+
+// In-page links: Privacy and Terms open the panel; section links scroll without touching the URL.
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link) return;
+
+  const hash = link.getAttribute("href");
+  const doc = getSheetDoc(hash);
+  if (doc) {
+    event.preventDefault();
+    window.history.pushState({ sheet: doc.id, overHash: Boolean(window.location.hash) }, "", `#${doc.id}`);
+    openSheet(doc);
+    return;
+  }
+
+  const section = hash.length > 1 ? document.querySelector(hash) : null;
+  if (!section) return;
+  event.preventDefault();
+  section.scrollIntoView();
+});
+
+window.addEventListener("popstate", () => {
+  const doc = getSheetDoc(window.location.hash);
+  if (doc) openSheet(doc);
+  else closeSheet();
+});
+
+sheet?.querySelector(".sheet-close")?.addEventListener("click", dismissSheet);
+sheet?.querySelector(".sheet-scrim")?.addEventListener("click", dismissSheet);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && sheet && !sheet.hidden) dismissSheet();
+});
+
+openSheet(getSheetDoc(window.location.hash));
+
+// The hero games, copied once so the phone strip can loop without a seam (hidden on wider screens).
+const heroStage = document.querySelector(".hero-stage");
+heroStage?.querySelectorAll("img").forEach((img) => {
+  const clone = img.cloneNode();
+  clone.classList.add("stage-clone");
+  heroStage.append(clone);
+});
+
+// Scrolling down, the nav narrows to the logo and the download button; scrolling up it opens again.
+const siteHeader = document.querySelector("#site-header");
+let lastScrollY = window.scrollY;
+
+window.addEventListener(
+  "scroll",
+  () => {
+    const y = window.scrollY;
+    if (Math.abs(y - lastScrollY) < 6) return;
+    const compact = y > lastScrollY && y > 120;
+    siteHeader?.classList.toggle("is-compact", compact);
+    if (compact) {
+      navLinks?.classList.remove("is-open");
+      navToggle?.setAttribute("aria-expanded", "false");
+    }
+    lastScrollY = y;
   },
-  { rootMargin: "-42% 0px -52% 0px" },
+  { passive: true },
 );
 
-observedSections.forEach((section) => observer.observe(section));
+// Sections ease in the first time they are scrolled to.
+const revealItems = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px" },
+  );
+  revealItems.forEach((item) => revealObserver.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add("is-visible"));
+}
+
+// Card of the day: drawing brings the next card of the small deck to the top.
+const dayCards = [...document.querySelectorAll("#day-deck .day-card")];
+let dayIndex = 0;
+
+const showDayCard = (index) => {
+  dayCards.forEach((card, cardIndex) => {
+    card.classList.toggle("is-active", cardIndex === index);
+    card.classList.toggle("is-next", cardIndex === (index + 1) % dayCards.length);
+    card.setAttribute("aria-hidden", String(cardIndex !== index));
+  });
+};
+
+document.querySelector("#draw-card")?.addEventListener("click", () => {
+  dayIndex = (dayIndex + 1) % dayCards.length;
+  showDayCard(dayIndex);
+});
+
+if (dayCards.length) showDayCard(dayIndex);
+
+// Inside a card: the text block nearest the middle of the screen picks the card's face.
+const cardScene = document.querySelector("#card-scene");
+const sceneSteps = [...document.querySelectorAll(".scene-step")];
+
+const updateCardScene = () => {
+  if (!cardScene || !sceneSteps.length) return;
+
+  const middle = window.innerHeight / 2;
+  let nearest = sceneSteps[0];
+  let nearestDistance = Infinity;
+
+  sceneSteps.forEach((step) => {
+    const box = step.getBoundingClientRect();
+    const distance = Math.abs(box.top + box.height / 2 - middle);
+    if (distance < nearestDistance) {
+      nearest = step;
+      nearestDistance = distance;
+    }
+  });
+
+  cardScene.dataset.face = nearest.dataset.face;
+  sceneSteps.forEach((step) => step.classList.toggle("is-active", step === nearest));
+};
+
+window.addEventListener("scroll", updateCardScene, { passive: true });
+window.addEventListener("resize", updateCardScene);
+updateCardScene();
+
+// For you: the app's two setup cards. The age stepper counts; the first interest picked decides
+// which game is shown as the first card of the deck.
+const AGE_MIN = 0;
+const AGE_MAX = 10;
+const ageValue = document.querySelector("#age-value");
+const interestRows = [...document.querySelectorAll("#interest-rows .interest-row")];
+const readyPosters = [...document.querySelectorAll("#ready-stack .ready-poster")];
+let age = 4;
+
+const changeAge = (step) => {
+  age = Math.min(AGE_MAX, Math.max(AGE_MIN, age + step));
+  if (ageValue) ageValue.textContent = age >= AGE_MAX ? `${AGE_MAX}+` : String(age);
+};
+
+const updateReadyPoster = () => {
+  const picked = interestRows.find((row) => row.getAttribute("aria-pressed") === "true") ?? interestRows[0];
+  readyPosters.forEach((poster) => {
+    poster.hidden = poster.dataset.cat !== picked?.dataset.cat;
+  });
+};
+
+document.querySelector("#age-down")?.addEventListener("click", () => changeAge(-1));
+document.querySelector("#age-up")?.addEventListener("click", () => changeAge(1));
+
+interestRows.forEach((row) => {
+  row.addEventListener("click", () => {
+    row.setAttribute("aria-pressed", String(row.getAttribute("aria-pressed") !== "true"));
+    updateReadyPoster();
+  });
+});
+
+updateReadyPoster();
 
 applyLanguage(getInitialLanguage(), { updateUrl: true, replaceUrl: true });
-window.addEventListener("load", () => {
-  loadTallyEmbeds();
-  stabilizeTallyFrameHeight(supportFormFrame);
-});
